@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using ChessX.Game.Chess.ChessMatches;
+using ChessX.Game.Chess.Moves;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Primitives;
 
@@ -28,9 +32,27 @@ namespace ChessX.Game.Chess.ChessPieces
             set => Position = new Vector2I(Position.X, value);
         }
 
-        public ChessPiece(ChessColor color)
+        protected ChessPiece(ChessColor color)
         {
             Color = color;
         }
+
+        public static ChessPiece CreateChessPiece(ChessPieceType pieceType, ChessColor color) => pieceType switch
+        {
+            ChessPieceType.King => new KingPiece(color),
+            ChessPieceType.Queen => new QueenPiece(color),
+            ChessPieceType.Bishop => new BishopPiece(color),
+            ChessPieceType.Knight => new KnightPiece(color),
+            ChessPieceType.Rook => new RookPiece(color),
+            ChessPieceType.Pawn => new PawnPiece(color),
+            _ => throw new ArgumentOutOfRangeException(nameof(pieceType), pieceType, null)
+        };
+
+        public IEnumerable<Move> GetAllowedMoves(ChessMatch match)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected abstract IEnumerable<Move> GetPossibleMoves(ChessMatch match);
     }
 }

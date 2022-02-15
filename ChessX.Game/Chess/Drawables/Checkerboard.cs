@@ -1,4 +1,5 @@
 using System.Linq;
+using ChessX.Game.Chess.ChessMatches;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -8,19 +9,16 @@ namespace ChessX.Game.Chess.Drawables
 {
     public class Checkerboard : CompositeDrawable
     {
-        public int BoardWidth { get; }
+        public int BoardWidth { get; private set; }
 
-        public int BoardHeight { get; }
+        public int BoardHeight { get; private set; }
 
-        public Checkerboard(int width = 8, int height = 8)
+        [BackgroundDependencyLoader(true)]
+        private void load(IHasBoardSize board)
         {
-            BoardWidth = width;
-            BoardHeight = height;
-        }
+            BoardWidth = board?.BoardWidth ?? ChessMatch.DEFAULT_BOARD_SIZE.X;
+            BoardHeight = board?.BoardHeight ?? ChessMatch.DEFAULT_BOARD_SIZE.Y;
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
             var tiles = new Drawable[BoardHeight][];
 
             for (int i = 0; i < BoardHeight; i++)
@@ -29,7 +27,7 @@ namespace ChessX.Game.Chess.Drawables
 
                 for (int j = 0; j < BoardWidth; j++)
                 {
-                    tiles[i][j] = new CheckerboardTile(i % 2 == j % 2 ? TileVariant.Dark : TileVariant.Light);
+                    tiles[i][j] = new CheckerboardTile(i % 2 != j % 2 ? TileVariant.Dark : TileVariant.Light);
                 }
             }
 

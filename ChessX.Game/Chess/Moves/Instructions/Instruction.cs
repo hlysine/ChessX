@@ -6,6 +6,11 @@ namespace ChessX.Game.Chess.Moves.Instructions
     {
         public abstract InstructionType Type { get; }
 
-        public ChessPiece ChessPiece { get; set; }
+        public ChessPiece ChessPiece { get; }
+
+        protected Instruction(ChessPiece chessPiece)
+        {
+            ChessPiece = chessPiece;
+        }
     }
 }

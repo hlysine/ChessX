@@ -1,3 +1,5 @@
+using ChessX.Game.Chess.ChessMatches;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
@@ -12,20 +14,23 @@ namespace ChessX.Game.Chess.Drawables
         protected override Container<Drawable> Content => content;
         private readonly ScalingContainer content;
 
-        public int BoardWidth { get; }
+        public int BoardWidth
+        {
+            set => content.TargetWidth = value;
+        }
 
-        public int BoardHeight { get; }
+        public int BoardHeight
+        {
+            set => content.TargetHeight = value;
+        }
 
         public bool AlignToTileCenter
         {
             set => content.AlignToCenter = value;
         }
 
-        public ChessGridContainer(int width = 8, int height = 8)
+        public ChessGridContainer()
         {
-            BoardWidth = width;
-            BoardHeight = height;
-
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 
@@ -38,8 +43,15 @@ namespace ChessX.Game.Chess.Drawables
                 RelativeSizeAxes = Axes.Both,
                 FillMode = FillMode.Fit,
                 FillAspectRatio = 1,
-                Child = content = new ScalingContainer(BoardWidth, BoardHeight) { RelativeSizeAxes = Axes.Both }
+                Child = content = new ScalingContainer { RelativeSizeAxes = Axes.Both }
             };
+        }
+
+        [BackgroundDependencyLoader(true)]
+        private void load(IHasBoardSize board)
+        {
+            BoardWidth = board?.BoardWidth ?? ChessMatch.DEFAULT_BOARD_SIZE.X;
+            BoardHeight = board?.BoardHeight ?? ChessMatch.DEFAULT_BOARD_SIZE.Y;
         }
 
         /// <summary>
@@ -47,17 +59,11 @@ namespace ChessX.Game.Chess.Drawables
         /// </summary>
         private class ScalingContainer : Container
         {
-            internal int TargetWidth { get; }
+            internal int TargetWidth { get; set; }
 
-            internal int TargetHeight { get; }
+            internal int TargetHeight { get; set; }
 
             internal bool AlignToCenter { get; set; }
-
-            internal ScalingContainer(int width, int height)
-            {
-                TargetWidth = width;
-                TargetHeight = height;
-            }
 
             protected override void Update()
             {
