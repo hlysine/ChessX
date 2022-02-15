@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "ChessX.sln",
+    "projects": [
+      "ChessX.Game\\ChessX.Game.csproj",
+      "ChessX.Resources\\ChessX.Resources.csproj",
+      "ChessX.iOS\\ChessX.iOS.csproj"
+    ]
+  }
+}

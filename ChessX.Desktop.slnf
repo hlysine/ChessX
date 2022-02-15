@@ -1,0 +1,11 @@
+﻿{
+  "solution": {
+    "path": "ChessX.sln",
+    "projects": [
+      "ChessX.Desktop\\ChessX.Desktop.csproj",
+      "ChessX.Game\\ChessX.Game.csproj",
+      "ChessX.Game.Tests\\ChessX.Game.Tests.csproj",
+      "ChessX.Resources\\ChessX.Resources.csproj"
+    ]
+  }
+}
