@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ChessX.Game.Chess.ChessMatches;
 using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Chess.Moves.Instructions;
 using osu.Framework.Graphics.Primitives;

@@ -12,7 +12,7 @@ using osuTK;
 
 namespace ChessX.Game.Chess.Drawables
 {
-    public class DrawableChessPiece : CompositeDrawable
+    public abstract class DrawableChessPiece : CompositeDrawable
     {
         [CanBeNull]
         [Resolved(canBeNull: true)]
@@ -22,7 +22,7 @@ namespace ChessX.Game.Chess.Drawables
 
         private readonly Bindable<Vector2I> positionBindable = new Bindable<Vector2I>();
 
-        public DrawableChessPiece(ChessPiece chessPiece)
+        protected DrawableChessPiece(ChessPiece chessPiece)
         {
             ChessPiece = chessPiece;
 
@@ -31,11 +31,10 @@ namespace ChessX.Game.Chess.Drawables
             Size = Vector2.One;
 
             positionBindable.BindTo(chessPiece.PositionBindable);
-            positionBindable.BindValueChanged(e =>
-            {
-                Position = e.NewValue;
-            }, true);
+            positionBindable.BindValueChanged(OnPositionChanged, true);
         }
+
+        protected abstract void OnPositionChanged(ValueChangedEvent<Vector2I> e);
 
         [BackgroundDependencyLoader]
         private void load(TextureStore textures)

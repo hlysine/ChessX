@@ -2,11 +2,16 @@ using System.Linq;
 using ChessX.Game.Chess.ChessPieces;
 using osu.Framework.Graphics.Primitives;
 
-namespace ChessX.Game.Chess.ChessMatches
+namespace ChessX.Game.Chess.Rulesets.Classic
 {
     public class ClassicMatch : ChessMatch
     {
         public override Vector2I BoardSize => DEFAULT_BOARD_SIZE;
+
+        public ClassicMatch(Ruleset ruleset)
+            : base(ruleset)
+        {
+        }
 
         public override void Initialize()
         {

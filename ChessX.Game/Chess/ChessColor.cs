@@ -16,5 +16,7 @@ namespace ChessX.Game.Chess
             ChessColor.White => ChessColor.Black,
             _ => throw new ArgumentOutOfRangeException(nameof(color), color, null)
         };
+
+        public static bool IsOppositeOf(this ChessColor color1, ChessColor color2) => color1 == color2.GetOpposingColor();
     }
 }

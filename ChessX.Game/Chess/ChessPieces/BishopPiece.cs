@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using ChessX.Game.Chess.ChessMatches;
+using ChessX.Game.Chess.ChessPieces.Utils;
 using ChessX.Game.Chess.Moves;
+using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.ChessPieces
 {
@@ -15,7 +16,17 @@ namespace ChessX.Game.Chess.ChessPieces
 
         protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match)
         {
-            throw new System.NotImplementedException();
+            foreach (var move in ChessPieceMoveUtils.GenerateMovesForDirection(this, match, new Vector2I(1, 1)))
+                yield return move;
+
+            foreach (var move in ChessPieceMoveUtils.GenerateMovesForDirection(this, match, new Vector2I(1, -1)))
+                yield return move;
+
+            foreach (var move in ChessPieceMoveUtils.GenerateMovesForDirection(this, match, new Vector2I(-1, 1)))
+                yield return move;
+
+            foreach (var move in ChessPieceMoveUtils.GenerateMovesForDirection(this, match, new Vector2I(-1, -1)))
+                yield return move;
         }
     }
 }

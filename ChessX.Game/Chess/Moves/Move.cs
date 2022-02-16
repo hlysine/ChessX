@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ChessX.Game.Chess.ChessMatches;
 using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Chess.Moves.Instructions;
 using osu.Framework.Graphics.Primitives;
@@ -12,6 +11,8 @@ namespace ChessX.Game.Chess.Moves
 
         public ChessPiece ChessPiece { get; }
 
+        public Vector2I OriginalPosition { get; }
+
         public Vector2I TargetPosition { get; }
 
         public virtual bool CanCaptureTarget => false;
@@ -19,6 +20,7 @@ namespace ChessX.Game.Chess.Moves
         protected Move(ChessPiece chessPiece, Vector2I targetPosition)
         {
             ChessPiece = chessPiece;
+            OriginalPosition = chessPiece.Position;
             TargetPosition = targetPosition;
         }
 

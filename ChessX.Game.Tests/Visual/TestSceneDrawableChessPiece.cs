@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
 using ChessX.Game.Chess;
-using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Chess.Drawables;
+using ChessX.Game.Chess.Rulesets;
+using ChessX.Game.Chess.Rulesets.Classic;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -13,7 +15,7 @@ namespace ChessX.Game.Tests.Visual
     public class TestSceneDrawableChessPiece : ChessXTestScene
     {
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(Bindable<Ruleset> ruleset)
         {
             Add(new Box
             {
@@ -32,8 +34,8 @@ namespace ChessX.Game.Tests.Visual
                     RelativeSizeAxes = Axes.Both,
                     Children = Enum.GetValues(typeof(ChessPieceType)).Cast<ChessPieceType>().SelectMany(p => new[]
                     {
-                        new DrawableChessPiece(ChessPiece.CreateChessPiece(p, ChessColor.Black)),
-                        new DrawableChessPiece(ChessPiece.CreateChessPiece(p, ChessColor.White))
+                        new DrawableClassicPiece(ruleset.Value.CreateChessPiece(p, ChessColor.Black)),
+                        new DrawableClassicPiece(ruleset.Value.CreateChessPiece(p, ChessColor.White))
                     }).ToList()
                 }
             });

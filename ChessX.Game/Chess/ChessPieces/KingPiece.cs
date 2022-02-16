@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChessX.Game.Chess.ChessMatches;
 using ChessX.Game.Chess.Moves;
 using ChessX.Game.Chess.Utils;
 using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.ChessPieces
 {
-    public class KingPiece : StatefulChessPiece
+    public class KingPiece : ChessPiece
     {
         public KingPiece(ChessColor color)
             : base(color)
@@ -33,13 +32,13 @@ namespace ChessX.Game.Chess.ChessPieces
             }
 
             // Castling
-            if (HasMovedSinceStart) yield break;
+            if (match.HasMovedSinceStart(this)) yield break;
 
             if (match.IsInCheck(Color)) yield break;
 
             var rooks = match.ChessPieces.Where(p => p.Color == Color && p.PieceType == ChessPieceType.Rook)
                              .Cast<RookPiece>()
-                             .Where(p => !p.HasMovedSinceStart);
+                             .Where(p => !match.HasMovedSinceStart(p));
 
             if (!rooks.Any()) yield break;
 
