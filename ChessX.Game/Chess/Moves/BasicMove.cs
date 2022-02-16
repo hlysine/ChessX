@@ -13,6 +13,10 @@ namespace ChessX.Game.Chess.Moves
         public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)
         {
             yield return new MoveInstruction(ChessPiece, TargetPosition);
+
+            var capture = chessMatch.GetPieceAt(TargetPosition);
+            if (capture != null)
+                yield return new RemoveInstruction(capture);
         }
 
         public BasicMove(ChessPiece chessPiece, Vector2I targetPosition)
