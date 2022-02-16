@@ -11,5 +11,7 @@ namespace ChessX.Game.Chess.Moves.Instructions
             : base(chessPiece, position)
         {
         }
+
+        // todo: remember to change state of StatefulChessPiece after moving
     }
 }

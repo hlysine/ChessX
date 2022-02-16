@@ -4,7 +4,7 @@ using ChessX.Game.Chess.Moves;
 
 namespace ChessX.Game.Chess.ChessPieces
 {
-    public class PawnPiece : ChessPiece
+    public class PawnPiece : StatefulChessPiece
     {
         public PawnPiece(ChessColor color)
             : base(color)

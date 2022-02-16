@@ -50,7 +50,8 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public IEnumerable<Move> GetAllowedMoves(ChessMatch match)
         {
-            throw new NotImplementedException();
+            // todo: filter by moves that would still leave the player in check
+            return GetPossibleMoves(match);
         }
 
         protected abstract IEnumerable<Move> GetPossibleMoves(ChessMatch match);

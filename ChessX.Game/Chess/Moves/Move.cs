@@ -14,6 +14,8 @@ namespace ChessX.Game.Chess.Moves
 
         public Vector2I TargetPosition { get; }
 
+        public virtual bool CanCaptureTarget => false;
+
         protected Move(ChessPiece chessPiece, Vector2I targetPosition)
         {
             ChessPiece = chessPiece;
