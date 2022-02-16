@@ -46,7 +46,7 @@ namespace ChessX.Game.Chess.ChessPieces
             foreach (var rook in rooks)
             {
                 if (match.ChessPieces.Any(p => p.Position.Y == Y && MathUtils.InBetween(p.Position.X, rook.X, X)))
-                    yield break;
+                    continue;
 
                 var targetPos = new Vector2I(X + Math.Sign(rook.X - X) * 2, Y);
                 var middlePos = new Vector2I((X + targetPos.X) / 2, Y);
