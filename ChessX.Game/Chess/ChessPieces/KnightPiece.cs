@@ -30,6 +30,9 @@ namespace ChessX.Game.Chess.ChessPieces
             foreach (var offset in possible_offsets)
             {
                 var targetPos = Position + offset;
+
+                if (!match.IsInBounds(targetPos)) continue;
+
                 var targetPiece = match.GetPieceAt(targetPos);
 
                 if (targetPiece == null || targetPiece.Color.IsOppositeOf(Color))

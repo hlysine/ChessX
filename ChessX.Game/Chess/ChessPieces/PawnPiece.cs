@@ -27,7 +27,7 @@ namespace ChessX.Game.Chess.ChessPieces
             int forwardOffset = Color == ChessColor.Black ? 1 : -1;
             int opponentBaseRank = Color == ChessColor.Black ? match.BoardSize.Y - 1 : 0;
 
-            if (match.GetPieceAt(X, Y + forwardOffset) == null)
+            if (match.IsInBounds(X, Y + forwardOffset) && match.GetPieceAt(X, Y + forwardOffset) == null)
             {
                 var targetPos = new Vector2I(X, Y + forwardOffset);
 
@@ -45,7 +45,7 @@ namespace ChessX.Game.Chess.ChessPieces
                 // Move two steps at the start
                 if (!match.HasMovedSinceStart(this))
                 {
-                    if (match.GetPieceAt(X, Y + forwardOffset * 2) == null)
+                    if (match.IsInBounds(X, Y + forwardOffset * 2) && match.GetPieceAt(X, Y + forwardOffset * 2) == null)
                         yield return new BasicMove(this, new Vector2I(X, Y + forwardOffset * 2));
                 }
             }
@@ -67,12 +67,16 @@ namespace ChessX.Game.Chess.ChessPieces
 
         private bool canCapture(ChessMatch match, int x, int y)
         {
+            if (!match.IsInBounds(x, y)) return false;
+
             var targetPiece = match.GetPieceAt(x, y);
             return targetPiece != null && targetPiece.Color.IsOppositeOf(Color);
         }
 
         private bool canEnPassant(ChessMatch match, int x, int y)
         {
+            if (!match.IsInBounds(x, y)) return false;
+
             var targetPiece = match.GetPieceAt(x, y);
             return targetPiece != null
                    && targetPiece.Color.IsOppositeOf(Color)
