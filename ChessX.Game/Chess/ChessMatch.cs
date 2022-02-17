@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Chess.ChessPieces.Utils;
 using ChessX.Game.Chess.Moves;
+using ChessX.Game.Chess.Players;
 using ChessX.Game.Chess.Rulesets;
 using JetBrains.Annotations;
 using osu.Framework.Bindables;
@@ -19,11 +22,22 @@ namespace ChessX.Game.Chess
 
         public BindableList<Move> MoveHistory { get; } = new BindableList<Move>();
 
+        private readonly List<Player> players = new List<Player>();
+
+        public IReadOnlyList<Player> Players => players;
+
         public abstract Vector2I BoardSize { get; }
 
         protected ChessMatch(Ruleset ruleset)
         {
             Ruleset = ruleset;
+        }
+
+        public void AddPlayer(Player player, ChessColor color)
+        {
+            player.ChessMatch = this;
+            player.Color = color;
+            players.Add(player);
         }
 
         public virtual void Initialize()
@@ -57,6 +71,20 @@ namespace ChessX.Game.Chess
             ChessPieces.AddRange(Enumerable.Range(0, 8).Select(i => Ruleset.CreateChessPiece(ChessPieceType.Pawn, ChessColor.White).WithPosition(i, 6)));
         }
 
+        public abstract Task ProcessRound();
+
+        public abstract bool MatchEnded { get; }
+
+        [NotNull]
+        public Player GetPlayerWithColor(ChessColor color)
+        {
+            return Players.First(p => p.Color == color);
+        }
+
+        public Player WhitePlayer => GetPlayerWithColor(ChessColor.White);
+
+        public Player BlackPlayer => GetPlayerWithColor(ChessColor.Black);
+
         [NotNull]
         public ChessPiece GetKingPiece(ChessColor color)
         {
@@ -79,7 +107,7 @@ namespace ChessX.Game.Chess
         public bool PositionCapturable(Vector2I position, ChessColor capturerColor)
         {
             return ChessPieces.Where(p => p.Color == capturerColor)
-                              .Any(p => p.GetAllowedMoves(this).Any(m => m.CanCaptureTarget && m.TargetPosition == position));
+                              .Any(p => p.GetAllowedMoves(this, true).Any(m => m.CanCaptureTarget && m.TargetPosition == position));
         }
 
         public bool IsInCheck(ChessColor color)

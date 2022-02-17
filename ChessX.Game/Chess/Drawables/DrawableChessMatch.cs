@@ -50,7 +50,7 @@ namespace ChessX.Game.Chess.Drawables
             });
 
             chessPieces.BindTo(ChessMatch.ChessPieces);
-            chessPieces.BindCollectionChanged(OnChessPiecesChanged, true);
+            chessPieces.BindCollectionChanged((sender, e) => Schedule(() => OnChessPiecesChanged(sender, e)), true);
         }
 
         protected virtual void OnChessPiecesChanged(object sender, NotifyCollectionChangedEventArgs e)

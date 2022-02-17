@@ -1,6 +1,6 @@
 using System;
 
-namespace ChessX.Game.Chess.Utils
+namespace ChessX.Game.Utils
 {
     public static class MathUtils
     {

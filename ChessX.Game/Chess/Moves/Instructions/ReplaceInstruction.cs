@@ -1,4 +1,5 @@
 using ChessX.Game.Chess.ChessPieces;
+using ChessX.Game.Chess.ChessPieces.Utils;
 
 namespace ChessX.Game.Chess.Moves.Instructions
 {
@@ -10,6 +11,12 @@ namespace ChessX.Game.Chess.Moves.Instructions
             : base(chessPiece)
         {
             NewChessPiece = newChessPiece;
+        }
+
+        public override void Execute(ChessMatch chessMatch)
+        {
+            chessMatch.ChessPieces.Remove(ChessPiece);
+            chessMatch.ChessPieces.Add(NewChessPiece.WithPosition(ChessPiece.Position));
         }
     }
 }

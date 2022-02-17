@@ -8,11 +8,6 @@ namespace ChessX.Game.Chess.Players
 {
     public abstract class TimeLimitedPlayer : Player
     {
-        protected TimeLimitedPlayer(ChessMatch chessMatch)
-            : base(chessMatch)
-        {
-        }
-
         private readonly Stopwatch stopwatch = new Stopwatch();
 
         public TimeSpan TimeAllowed { get; private set; }

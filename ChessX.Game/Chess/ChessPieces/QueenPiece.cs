@@ -14,7 +14,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public override ChessPieceType PieceType => ChessPieceType.Queen;
 
-        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match)
+        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion)
         {
             for (int i = -1; i <= 1; i++)
             {

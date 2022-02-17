@@ -31,7 +31,7 @@ namespace ChessX.Game.Chess.Drawables
             Size = Vector2.One;
 
             positionBindable.BindTo(chessPiece.PositionBindable);
-            positionBindable.BindValueChanged(OnPositionChanged, true);
+            positionBindable.BindValueChanged(e => Schedule(() => OnPositionChanged(e)), true);
         }
 
         protected abstract void OnPositionChanged(ValueChangedEvent<Vector2I> e);

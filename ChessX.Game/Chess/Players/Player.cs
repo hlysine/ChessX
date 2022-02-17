@@ -7,7 +7,9 @@ namespace ChessX.Game.Chess.Players
 {
     public abstract class Player
     {
-        public ChessMatch ChessMatch { get; }
+        public ChessMatch ChessMatch { get; set; }
+
+        public ChessColor Color { get; set; }
 
         public readonly BindableBool IsInTurnBindable = new BindableBool();
 
@@ -24,11 +26,6 @@ namespace ChessX.Game.Chess.Players
         {
             get => SelectedMoveBindable.Value;
             set => SelectedMoveBindable.Value = value;
-        }
-
-        protected Player(ChessMatch chessMatch)
-        {
-            ChessMatch = chessMatch;
         }
 
         public async Task<Move> PerformMoveAsync()

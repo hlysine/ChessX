@@ -14,7 +14,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public override ChessPieceType PieceType => ChessPieceType.Bishop;
 
-        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match)
+        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion)
         {
             foreach (var move in ChessPieceMoveUtils.GenerateMovesForDirection(this, match, new Vector2I(1, 1)))
                 yield return move;

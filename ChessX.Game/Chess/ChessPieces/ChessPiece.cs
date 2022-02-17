@@ -35,12 +35,12 @@ namespace ChessX.Game.Chess.ChessPieces
             Color = color;
         }
 
-        public IEnumerable<Move> GetAllowedMoves(ChessMatch match)
+        public IEnumerable<Move> GetAllowedMoves(ChessMatch match, bool noRecursion = false)
         {
             // todo: filter by moves that would still leave the player in check
-            return GetPossibleMoves(match);
+            return GetPossibleMoves(match, noRecursion);
         }
 
-        protected abstract IEnumerable<Move> GetPossibleMoves(ChessMatch match);
+        protected abstract IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion);
     }
 }

@@ -8,5 +8,10 @@ namespace ChessX.Game.Chess.Moves.Instructions
             : base(chessPiece)
         {
         }
+
+        public override void Execute(ChessMatch chessMatch)
+        {
+            chessMatch.ChessPieces.Remove(ChessPiece);
+        }
     }
 }

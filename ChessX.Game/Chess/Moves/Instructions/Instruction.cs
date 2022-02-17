@@ -10,5 +10,7 @@ namespace ChessX.Game.Chess.Moves.Instructions
         {
             ChessPiece = chessPiece;
         }
+
+        public abstract void Execute(ChessMatch chessMatch);
     }
 }

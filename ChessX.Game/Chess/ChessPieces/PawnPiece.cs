@@ -21,7 +21,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public override ChessPieceType PieceType => ChessPieceType.Pawn;
 
-        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match)
+        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion)
         {
             // Moving forward
             int forwardOffset = Color == ChessColor.Black ? 1 : -1;

@@ -25,7 +25,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public override ChessPieceType PieceType => ChessPieceType.Knight;
 
-        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match)
+        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion)
         {
             foreach (var offset in possible_offsets)
             {

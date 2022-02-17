@@ -9,5 +9,10 @@ namespace ChessX.Game.Chess.Moves.Instructions
             : base(chessPiece, position)
         {
         }
+
+        public override void Execute(ChessMatch chessMatch)
+        {
+            ChessPiece.Position = Position;
+        }
     }
 }
