@@ -51,6 +51,7 @@ namespace ChessX.Game.Chess.Drawables
 
             chessPieces.BindTo(ChessMatch.ChessPieces);
             chessPieces.BindCollectionChanged((sender, e) => Schedule(() => OnChessPiecesChanged(sender, e)), true);
+            FinishTransforms(true);
         }
 
         protected virtual void OnChessPiecesChanged(object sender, NotifyCollectionChangedEventArgs e)

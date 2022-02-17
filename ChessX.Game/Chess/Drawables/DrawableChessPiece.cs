@@ -32,6 +32,7 @@ namespace ChessX.Game.Chess.Drawables
 
             positionBindable.BindTo(chessPiece.PositionBindable);
             positionBindable.BindValueChanged(e => Schedule(() => OnPositionChanged(e)), true);
+            FinishTransforms(true);
         }
 
         protected abstract void OnPositionChanged(ValueChangedEvent<Vector2I> e);
