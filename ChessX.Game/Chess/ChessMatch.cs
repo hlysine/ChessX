@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ChessX.Game.Chess.ChessPieces;
+using ChessX.Game.Chess.ChessPieces.Utils;
 using ChessX.Game.Chess.Moves;
 using ChessX.Game.Chess.Rulesets;
 using JetBrains.Annotations;
@@ -25,7 +26,36 @@ namespace ChessX.Game.Chess
             Ruleset = ruleset;
         }
 
-        public abstract void Initialize();
+        public virtual void Initialize()
+        {
+            ChessPieces.Clear();
+
+            ChessPieces.AddRange(new[]
+            {
+                Ruleset.CreateChessPiece(ChessPieceType.Rook, ChessColor.Black).WithPosition(0, 0),
+                Ruleset.CreateChessPiece(ChessPieceType.Knight, ChessColor.Black).WithPosition(1, 0),
+                Ruleset.CreateChessPiece(ChessPieceType.Bishop, ChessColor.Black).WithPosition(2, 0),
+                Ruleset.CreateChessPiece(ChessPieceType.Queen, ChessColor.Black).WithPosition(3, 0),
+                Ruleset.CreateChessPiece(ChessPieceType.King, ChessColor.Black).WithPosition(4, 0),
+                Ruleset.CreateChessPiece(ChessPieceType.Bishop, ChessColor.Black).WithPosition(5, 0),
+                Ruleset.CreateChessPiece(ChessPieceType.Knight, ChessColor.Black).WithPosition(6, 0),
+                Ruleset.CreateChessPiece(ChessPieceType.Rook, ChessColor.Black).WithPosition(7, 0)
+            });
+            ChessPieces.AddRange(Enumerable.Range(0, 8).Select(i => Ruleset.CreateChessPiece(ChessPieceType.Pawn, ChessColor.Black).WithPosition(i, 1)));
+
+            ChessPieces.AddRange(new[]
+            {
+                Ruleset.CreateChessPiece(ChessPieceType.Rook, ChessColor.White).WithPosition(0, 7),
+                Ruleset.CreateChessPiece(ChessPieceType.Knight, ChessColor.White).WithPosition(1, 7),
+                Ruleset.CreateChessPiece(ChessPieceType.Bishop, ChessColor.White).WithPosition(2, 7),
+                Ruleset.CreateChessPiece(ChessPieceType.Queen, ChessColor.White).WithPosition(3, 7),
+                Ruleset.CreateChessPiece(ChessPieceType.King, ChessColor.White).WithPosition(4, 7),
+                Ruleset.CreateChessPiece(ChessPieceType.Bishop, ChessColor.White).WithPosition(5, 7),
+                Ruleset.CreateChessPiece(ChessPieceType.Knight, ChessColor.White).WithPosition(6, 7),
+                Ruleset.CreateChessPiece(ChessPieceType.Rook, ChessColor.White).WithPosition(7, 7)
+            });
+            ChessPieces.AddRange(Enumerable.Range(0, 8).Select(i => Ruleset.CreateChessPiece(ChessPieceType.Pawn, ChessColor.White).WithPosition(i, 6)));
+        }
 
         [NotNull]
         public ChessPiece GetKingPiece(ChessColor color)
