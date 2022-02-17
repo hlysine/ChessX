@@ -7,8 +7,6 @@ namespace ChessX.Game.Chess.Moves
 {
     public class EnPassantMove : Move
     {
-        public override MoveType Type => MoveType.EnPassant;
-
         public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)
         {
             yield return new MoveInstruction(ChessPiece, TargetPosition);

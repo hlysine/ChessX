@@ -7,8 +7,6 @@ namespace ChessX.Game.Chess.Moves
 {
     public class PawnPromotionMove : Move
     {
-        public override MoveType Type => MoveType.PawnPromotion;
-
         public ChessPieceType PromotionChoice { get; }
 
         public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)

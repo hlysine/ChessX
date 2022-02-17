@@ -7,8 +7,6 @@ namespace ChessX.Game.Chess.Moves
 {
     public abstract class Move
     {
-        public abstract MoveType Type { get; }
-
         public ChessPiece ChessPiece { get; }
 
         public Vector2I OriginalPosition { get; }

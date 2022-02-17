@@ -8,8 +8,6 @@ namespace ChessX.Game.Chess.Moves
 {
     public class CastlingMove : Move
     {
-        public override MoveType Type => MoveType.Castling;
-
         public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)
         {
             yield return new MoveInstruction(ChessPiece, TargetPosition);

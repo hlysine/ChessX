@@ -9,8 +9,6 @@ namespace ChessX.Game.Chess.Moves
     {
         public override bool CanCaptureTarget { get; }
 
-        public override MoveType Type => MoveType.Move;
-
         public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)
         {
             yield return new MoveInstruction(ChessPiece, TargetPosition);
