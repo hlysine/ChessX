@@ -43,9 +43,16 @@ namespace ChessX.Game.Chess.Drawables
                         RelativeSizeAxes = Axes.Both
                     }
                 },
-                chessPieceContainer = new ChessGridContainer
+                new ChessGridContainer
                 {
-                    AlignToTileCenter = true
+                    AlignToTileCenter = true,
+                    Children = new[]
+                    {
+                        chessPieceContainer = new Container
+                        {
+                            RelativeSizeAxes = Axes.Both
+                        }
+                    }
                 }
             });
 

@@ -13,7 +13,7 @@ namespace ChessX.Game.Chess.Moves
         {
             yield return new MoveInstruction(ChessPiece, TargetPosition);
 
-            var newChessPiece = chessMatch.Ruleset.CreateChessPiece(PromotionChoice, ChessPiece.Color);
+            var newChessPiece = chessMatch.CreateChessPiece(PromotionChoice, ChessPiece.Color);
             newChessPiece.Position = TargetPosition;
             yield return new ReplaceInstruction(ChessPiece, newChessPiece);
         }

@@ -1,4 +1,3 @@
-using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Chess.Drawables;
 
 namespace ChessX.Game.Chess.Rulesets
@@ -9,8 +8,6 @@ namespace ChessX.Game.Chess.Rulesets
 
         public abstract ChessMatch CreateChessMatch();
 
-        public abstract DrawableChessMatch CreateDrawableChessMatch(ChessMatch match);
-
-        public abstract ChessPiece CreateChessPiece(ChessPieceType type, ChessColor color);
+        public abstract DrawableRuleset CreateDrawableRuleset(ChessMatch match);
     }
 }

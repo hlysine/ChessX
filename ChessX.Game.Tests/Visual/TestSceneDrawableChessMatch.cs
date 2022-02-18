@@ -19,13 +19,13 @@ namespace ChessX.Game.Tests.Visual
             var classicRuleset = ruleset.Value;
             Player player1 = new AIPlayer();
             Player player2 = new AIPlayer();
-            DrawableChessMatch match;
+            DrawableRuleset drawableRuleset;
             var chessMatch = classicRuleset.CreateChessMatch();
             chessMatch.AddPlayer(player1, ChessColor.White);
             chessMatch.AddPlayer(player2, ChessColor.Black);
             chessMatch.Initialize();
-            Add(match = classicRuleset.CreateDrawableChessMatch(chessMatch));
-            Add(new StepSlider<float>("Chess board rotation", 0, 360, 0) { ValueChanged = val => match.Rotation = val });
+            Add(drawableRuleset = classicRuleset.CreateDrawableRuleset(chessMatch));
+            Add(new StepSlider<float>("Chess board rotation", 0, 360, 0) { ValueChanged = val => drawableRuleset.DrawableChessMatch.Rotation = val });
 
             async void loop(CancellationToken token = default)
             {
