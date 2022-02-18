@@ -2,6 +2,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Primitives;
 using static ChessX.Game.Chess.Drawables.CheckerboardTile;
 
 namespace ChessX.Game.Chess.Drawables
@@ -26,7 +27,7 @@ namespace ChessX.Game.Chess.Drawables
 
                 for (int j = 0; j < BoardWidth; j++)
                 {
-                    tiles[i][j] = new CheckerboardTile(i % 2 != j % 2 ? TileVariant.Dark : TileVariant.Light);
+                    tiles[i][j] = new CheckerboardTile(i % 2 != j % 2 ? TileVariant.Dark : TileVariant.Light, new Vector2I(j, i));
                 }
             }
 

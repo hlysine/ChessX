@@ -1,5 +1,7 @@
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
+using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 
@@ -7,11 +9,17 @@ namespace ChessX.Game.Chess.Drawables
 {
     public class CheckerboardTile : Box
     {
+        [Resolved]
+        private GridInputRedirector inputRedirector { get; set; }
+
         public TileVariant Variant { get; }
 
-        public CheckerboardTile(TileVariant variant)
+        public Vector2I GridPosition { get; }
+
+        public CheckerboardTile(TileVariant variant, Vector2I position)
         {
             Variant = variant;
+            GridPosition = position;
             Colour = getVariantColour();
             RelativeSizeAxes = Axes.Both;
         }
@@ -25,6 +33,11 @@ namespace ChessX.Game.Chess.Drawables
         protected override void OnHoverLost(HoverLostEvent e)
         {
             this.FadeColour(getVariantColour(), 100);
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            return inputRedirector.SendClick(GridPosition);
         }
 
         private ColourInfo getVariantColour()

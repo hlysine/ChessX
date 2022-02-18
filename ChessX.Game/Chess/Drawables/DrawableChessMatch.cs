@@ -31,26 +31,30 @@ namespace ChessX.Game.Chess.Drawables
             Anchor = Anchor.Centre;
             Scale = new Vector2(1 / MathF.Sqrt(2));
 
-            AddRange(new Drawable[]
+            Add(new GridInputRedirector
             {
-                new ChessGridContainer
+                RelativeSizeAxes = Axes.Both,
+                Children = new[]
                 {
-                    AlignToTileCenter = false,
-                    Child = checkerboard = new Checkerboard
+                    new ChessGridContainer
                     {
-                        Origin = Anchor.Centre,
-                        Anchor = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both
-                    }
-                },
-                new ChessGridContainer
-                {
-                    AlignToTileCenter = true,
-                    Children = new[]
-                    {
-                        chessPieceContainer = new Container
+                        AlignToTileCenter = false,
+                        Child = checkerboard = new Checkerboard
                         {
+                            Origin = Anchor.Centre,
+                            Anchor = Anchor.Centre,
                             RelativeSizeAxes = Axes.Both
+                        }
+                    },
+                    new ChessGridContainer
+                    {
+                        AlignToTileCenter = true,
+                        Children = new[]
+                        {
+                            chessPieceContainer = new Container
+                            {
+                                RelativeSizeAxes = Axes.Both
+                            }
                         }
                     }
                 }
