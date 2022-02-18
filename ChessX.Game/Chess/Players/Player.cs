@@ -48,6 +48,8 @@ namespace ChessX.Game.Chess.Players
 
         public void StartTurn()
         {
+            if (IsInTurn) return;
+
             selectedMove = null;
             IsInTurn = true;
             var localCompletionSource = turnCompletion = new TaskCompletionSource<Move>();
@@ -64,8 +66,10 @@ namespace ChessX.Game.Chess.Players
 
         public void EndTurn()
         {
+            if (!IsInTurn) return;
+
             IsInTurn = false;
-            turnCompletion.SetResult(SelectedMove);
+            turnCompletion?.SetResult(SelectedMove);
             turnCompletion = null;
             OnTurnEnd();
             TurnEnded?.Invoke();
