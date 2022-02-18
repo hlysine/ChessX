@@ -2,19 +2,20 @@ using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
+using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Chess.Drawables
 {
     [Cached]
     public class GridInputRedirector : Container
     {
-        public bool SendClick(Vector2I position)
+        public bool SendEvent(Vector2I position, UIEvent e)
         {
             foreach (var receiver in findInputReceivers(this))
             {
                 if (receiver.GridPosition == position)
                 {
-                    if (receiver.TriggerClick())
+                    if (receiver.TriggerEvent(e))
                         return true;
                 }
             }
@@ -43,6 +44,6 @@ namespace ChessX.Game.Chess.Drawables
     {
         public Vector2I GridPosition { get; }
 
-        public bool TriggerClick();
+        public bool TriggerEvent(UIEvent e);
     }
 }

@@ -37,7 +37,7 @@ namespace ChessX.Game.Chess.Drawables
 
         protected override bool OnClick(ClickEvent e)
         {
-            return inputRedirector.SendClick(GridPosition);
+            return inputRedirector.SendEvent(GridPosition, e);
         }
 
         private ColourInfo getVariantColour()
