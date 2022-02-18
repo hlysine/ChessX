@@ -72,6 +72,15 @@ namespace ChessX.Game.Chess.Drawables
             chessPieces.BindTo(ChessMatch.ChessPieces);
             chessPieces.BindCollectionChanged((sender, e) => Schedule(() => OnChessPiecesChanged(sender, e)), true);
             FinishTransforms(true);
+
+            foreach (var player in ChessMatch.Players)
+            {
+                player.TurnStarted += _ =>
+                {
+                    if (player.RotateChessBoard)
+                        Schedule(() => this.RotateTo(player.Color == ChessColor.White ? 0 : 180, 200, Easing.InOutQuint));
+                };
+            }
         }
 
         protected virtual void OnChessPiecesChanged(object sender, NotifyCollectionChangedEventArgs e)

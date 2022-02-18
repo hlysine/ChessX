@@ -7,6 +7,8 @@ namespace ChessX.Game.Chess.Players
     {
         private Action<Move> moveSelector;
 
+        public override bool RotateChessBoard => true;
+
         protected override void OnTurnStart(Action<Move> selectMove)
         {
             moveSelector = selectMove;

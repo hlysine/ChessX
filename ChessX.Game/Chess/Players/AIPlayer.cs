@@ -8,6 +8,8 @@ namespace ChessX.Game.Chess.Players
 {
     public class AIPlayer : Player
     {
+        public override bool RotateChessBoard => false;
+
         protected override void OnTurnStart(Action<Move> selectMove)
         {
             Task.Run(() =>

@@ -33,6 +33,8 @@ namespace ChessX.Game.Chess.Players
             set => selectedMoveBindable.Value = value;
         }
 
+        public abstract bool RotateChessBoard { get; }
+
         public delegate void TurnStartHandler(Action<Move> selectMove);
 
         public event TurnStartHandler TurnStarted;

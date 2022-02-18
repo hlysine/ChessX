@@ -18,16 +18,18 @@ namespace ChessX.Game.Tests.Visual
         private void load(Bindable<Ruleset> ruleset)
         {
             var classicRuleset = ruleset.Value;
-            MoveControl control = new MoveControl();
-            Player player1 = control.Player;
-            Player player2 = new AIPlayer();
+            MoveControl control1 = new MoveControl();
+            MoveControl control2 = new MoveControl();
+            Player player1 = control1.Player;
+            Player player2 = control2.Player;
             DrawableRuleset drawableRuleset;
             var chessMatch = classicRuleset.CreateChessMatch();
             chessMatch.AddPlayer(player1, ChessColor.White);
             chessMatch.AddPlayer(player2, ChessColor.Black);
             chessMatch.Initialize();
             Add(drawableRuleset = classicRuleset.CreateDrawableRuleset(chessMatch));
-            drawableRuleset.DrawableChessMatch.Overlays.Add(control);
+            drawableRuleset.DrawableChessMatch.Overlays.Add(control1);
+            drawableRuleset.DrawableChessMatch.Overlays.Add(control2);
 
             Add(new StepSlider<float>("Chess board rotation", 0, 360, 0) { ValueChanged = val => drawableRuleset.DrawableChessMatch.Rotation = val });
 
