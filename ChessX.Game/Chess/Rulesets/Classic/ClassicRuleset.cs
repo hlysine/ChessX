@@ -6,7 +6,7 @@ namespace ChessX.Game.Chess.Rulesets.Classic
     {
         public override string Name => "Classic";
 
-        public override ChessMatch CreateChessMatch() => new ClassicMatch(this);
+        public override ChessMatch CreateChessMatch() => new ClassicMatch();
 
         public override DrawableRuleset CreateDrawableRuleset(ChessMatch match) => new DrawableClassicRuleset(match);
     }

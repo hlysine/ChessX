@@ -15,11 +15,17 @@ namespace ChessX.Game.Chess.Drawables
     [Cached(typeof(IRotatable))]
     public abstract class DrawableChessMatch : Container, IRotatable
     {
+        [Cached(typeof(ChessMatch))]
         [Cached(typeof(IHasBoardSize))]
         public ChessMatch ChessMatch { get; }
 
-        private readonly Checkerboard checkerboard;
-        private readonly Container chessPieceContainer;
+        public Container Underlays { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
+        [Cached]
+        public ChessPieceContainer ChessPieceContainer { get; } = new ChessPieceContainer();
+
+        public Container Overlays { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
         private readonly BindableList<ChessPiece> chessPieces = new BindableList<ChessPiece>();
 
         protected DrawableChessMatch(ChessMatch match)
@@ -30,7 +36,11 @@ namespace ChessX.Game.Chess.Drawables
             Origin = Anchor.Centre;
             Anchor = Anchor.Centre;
             Scale = new Vector2(1 / MathF.Sqrt(2));
+        }
 
+        [BackgroundDependencyLoader]
+        private void load()
+        {
             Add(new GridInputRedirector
             {
                 RelativeSizeAxes = Axes.Both,
@@ -39,7 +49,7 @@ namespace ChessX.Game.Chess.Drawables
                     new ChessGridContainer
                     {
                         AlignToTileCenter = false,
-                        Child = checkerboard = new Checkerboard
+                        Child = new Checkerboard
                         {
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -51,10 +61,9 @@ namespace ChessX.Game.Chess.Drawables
                         AlignToTileCenter = true,
                         Children = new[]
                         {
-                            chessPieceContainer = new Container
-                            {
-                                RelativeSizeAxes = Axes.Both
-                            }
+                            Underlays,
+                            ChessPieceContainer,
+                            Overlays
                         }
                     }
                 }
@@ -83,28 +92,29 @@ namespace ChessX.Game.Chess.Drawables
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
-                    chessPieceContainer.RemoveAll(p => p is DrawableChessPiece);
-                    chessPieceContainer.AddRange(chessPieces.Select(CreateDrawableRepresentation));
+                    ChessPieceContainer.RemoveAll(p => p is DrawableChessPiece);
+                    ChessPieceContainer.AddRange(chessPieces.Select(CreateDrawableRepresentation));
                     break;
             }
         }
 
         private void addRange(IEnumerable<ChessPiece> newItems)
         {
-            chessPieceContainer.AddRange(newItems.Select(CreateDrawableRepresentation));
+            var newDrawables = newItems.Select(CreateDrawableRepresentation).ToList();
+            newDrawables.ForEach(d => d.MoveTo(d.ChessPiece.Position).FadeInFromZero(200, Easing.InOutQuint));
+            ChessPieceContainer.AddRange(newDrawables);
         }
 
         private void removeRange(IEnumerable<ChessPiece> oldItems)
         {
-            chessPieceContainer.RemoveAll(p =>
+            foreach (var child in ChessPieceContainer)
             {
-                if (p is DrawableChessPiece piece)
+                if (child is DrawableChessPiece piece)
                 {
-                    return oldItems.Contains(piece.ChessPiece);
+                    if (oldItems.Contains(piece.ChessPiece))
+                        piece.FadeOut(200, Easing.InOutQuint).Expire();
                 }
-
-                return false;
-            });
+            }
         }
 
         protected abstract DrawableChessPiece CreateDrawableRepresentation(ChessPiece chessPiece);

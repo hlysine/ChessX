@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Input.Events;
@@ -13,7 +14,7 @@ namespace ChessX.Game.Chess.Drawables
         {
             foreach (var receiver in findInputReceivers(this))
             {
-                if (receiver.GridPosition == position)
+                if (receiver.IsPresent && receiver.GridPosition == position)
                 {
                     if (receiver.TriggerEvent(e))
                         return true;
@@ -40,7 +41,7 @@ namespace ChessX.Game.Chess.Drawables
         }
     }
 
-    public interface IReceiveGridInput
+    public interface IReceiveGridInput : IDrawable
     {
         public Vector2I GridPosition { get; }
 

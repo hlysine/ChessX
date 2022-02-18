@@ -8,10 +8,10 @@ namespace ChessX.Game.Chess.ChessPieces
     {
         private static readonly ChessPieceType[] promotion_choices =
         {
-            ChessPieceType.Queen,
-            ChessPieceType.Bishop,
+            ChessPieceType.Rook,
             ChessPieceType.Knight,
-            ChessPieceType.Rook
+            ChessPieceType.Bishop,
+            ChessPieceType.Queen
         };
 
         public PawnPiece(ChessColor color)
@@ -35,7 +35,7 @@ namespace ChessX.Game.Chess.ChessPieces
                 {
                     // Pawn Promotion
                     foreach (var choice in promotion_choices)
-                        yield return new PawnPromotionMove(this, targetPos, choice);
+                        yield return new PawnPromotionMove(this, targetPos, choice, false);
                 }
                 else
                 {
@@ -51,11 +51,19 @@ namespace ChessX.Game.Chess.ChessPieces
             }
 
             // Capturing
-            if (canCapture(match, X - 1, Y + forwardOffset))
-                yield return new BasicMove(this, new Vector2I(X - 1, Y + forwardOffset));
-
-            if (canCapture(match, X + 1, Y + forwardOffset))
-                yield return new BasicMove(this, new Vector2I(X + 1, Y + forwardOffset));
+            foreach (var checkPos in new[] { new Vector2I(X - 1, Y + forwardOffset), new Vector2I(X + 1, Y + forwardOffset) })
+            {
+                if (canCapture(match, checkPos))
+                {
+                    if (Y + forwardOffset == opponentBaseRank)
+                    {
+                        foreach (var choice in promotion_choices)
+                            yield return new PawnPromotionMove(this, checkPos, choice, true);
+                    }
+                    else
+                        yield return new BasicMove(this, checkPos);
+                }
+            }
 
             // En Passant
             if (canEnPassant(match, X - 1, Y))
@@ -65,11 +73,11 @@ namespace ChessX.Game.Chess.ChessPieces
                 yield return new EnPassantMove(this, new Vector2I(X + 1, Y + forwardOffset));
         }
 
-        private bool canCapture(ChessMatch match, int x, int y)
+        private bool canCapture(ChessMatch match, Vector2I position)
         {
-            if (!match.IsInBounds(x, y)) return false;
+            if (!match.IsInBounds(position)) return false;
 
-            var targetPiece = match.GetPieceAt(x, y);
+            var targetPiece = match.GetPieceAt(position);
             return targetPiece != null && targetPiece.Color.IsOppositeOf(Color);
         }
 

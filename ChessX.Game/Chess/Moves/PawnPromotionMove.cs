@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.Moves
 {
-    public class PawnPromotionMove : Move
+    public class PawnPromotionMove : OptionalCaptureMove
     {
         public ChessPieceType PromotionChoice { get; }
 
@@ -16,10 +16,16 @@ namespace ChessX.Game.Chess.Moves
             var newChessPiece = chessMatch.CreateChessPiece(PromotionChoice, ChessPiece.Color);
             newChessPiece.Position = TargetPosition;
             yield return new ReplaceInstruction(ChessPiece, newChessPiece);
+
+            if (!CanCapture) yield break;
+
+            var capture = chessMatch.GetPieceAt(TargetPosition);
+            if (capture != null)
+                yield return new RemoveInstruction(capture);
         }
 
-        public PawnPromotionMove(ChessPiece chessPiece, Vector2I targetPosition, ChessPieceType promotionChoice)
-            : base(chessPiece, targetPosition)
+        public PawnPromotionMove(ChessPiece chessPiece, Vector2I targetPosition, ChessPieceType promotionChoice, bool canCapture)
+            : base(chessPiece, targetPosition, canCapture)
         {
             PromotionChoice = promotionChoice;
         }

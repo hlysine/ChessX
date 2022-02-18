@@ -6,7 +6,6 @@ using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Chess.ChessPieces.Utils;
 using ChessX.Game.Chess.Moves;
 using ChessX.Game.Chess.Players;
-using ChessX.Game.Chess.Rulesets;
 using JetBrains.Annotations;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Primitives;
@@ -15,8 +14,6 @@ namespace ChessX.Game.Chess
 {
     public abstract class ChessMatch : IHasBoardSize
     {
-        public Ruleset Ruleset { get; }
-
         public static readonly Vector2I DEFAULT_BOARD_SIZE = new Vector2I(8);
         public BindableList<ChessPiece> ChessPieces { get; } = new BindableList<ChessPiece>();
 
@@ -26,11 +23,10 @@ namespace ChessX.Game.Chess
 
         public IReadOnlyList<Player> Players => players;
 
-        public abstract Vector2I BoardSize { get; }
+        public virtual Vector2I BoardSize => DEFAULT_BOARD_SIZE;
 
-        protected ChessMatch(Ruleset ruleset)
+        protected ChessMatch()
         {
-            Ruleset = ruleset;
         }
 
         public void AddPlayer(Player player, ChessColor color)
@@ -109,7 +105,7 @@ namespace ChessX.Game.Chess
         public bool PositionCapturable(Vector2I position, ChessColor capturerColor)
         {
             return ChessPieces.Where(p => p.Color == capturerColor)
-                              .Any(p => p.GetAllowedMoves(this, true).Any(m => m.CanCaptureTarget && m.TargetPosition == position));
+                              .Any(p => p.GetAllowedMoves(this, true).Any(m => m.CanCapture && m.TargetPosition == position));
         }
 
         public bool IsInCheck(ChessColor color)

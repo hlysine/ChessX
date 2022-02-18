@@ -4,38 +4,38 @@ using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
-using osuTK;
+using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Chess.Drawables
 {
-    public abstract class DrawableChessPiece : CompositeDrawable
+    public abstract class DrawableChessPiece : ChessBoardItem
     {
         [CanBeNull]
         [Resolved(canBeNull: true)]
         private IRotatable rotationParent { get; set; }
 
+        [CanBeNull]
+        [Resolved(canBeNull: true)]
+        private ChessPieceContainer chessPieceContainer { get; set; }
+
         public ChessPiece ChessPiece { get; }
 
         private readonly Bindable<Vector2I> positionBindable = new Bindable<Vector2I>();
 
+        public override Vector2I GridPosition => ChessPiece.Position;
+
         protected DrawableChessPiece(ChessPiece chessPiece)
         {
             ChessPiece = chessPiece;
-
-            Origin = Anchor.Centre;
-            Anchor = Anchor.TopLeft;
-            Size = Vector2.One;
-
-            positionBindable.BindTo(chessPiece.PositionBindable);
-            positionBindable.BindValueChanged(e => Schedule(() => OnPositionChanged(e)), true);
-            FinishTransforms(true);
         }
 
-        protected abstract void OnPositionChanged(ValueChangedEvent<Vector2I> e);
+        protected virtual void OnPositionChanged(ValueChangedEvent<Vector2I> e)
+        {
+            this.MoveTo(e.NewValue, 200, Easing.InOutQuint);
+        }
 
         [BackgroundDependencyLoader]
         private void load(TextureStore textures)
@@ -45,6 +45,10 @@ namespace ChessX.Game.Chess.Drawables
                 RelativeSizeAxes = Axes.Both,
                 Texture = textures.Get(GetTextureName())
             });
+
+            positionBindable.BindTo(ChessPiece.PositionBindable);
+            positionBindable.BindValueChanged(e => Schedule(() => OnPositionChanged(e)), true);
+            FinishTransforms(true);
         }
 
         protected string GetTextureName()
@@ -57,6 +61,12 @@ namespace ChessX.Game.Chess.Drawables
             base.Update();
             if (rotationParent != null)
                 Rotation = -rotationParent.Rotation;
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            chessPieceContainer?.TriggerPieceClick(this, e);
+            return true;
         }
     }
 }

@@ -5,25 +5,22 @@ using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.Moves
 {
-    public class BasicMove : Move
+    public class BasicMove : OptionalCaptureMove
     {
-        public override bool CanCaptureTarget { get; }
-
         public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)
         {
             yield return new MoveInstruction(ChessPiece, TargetPosition);
 
-            if (!CanCaptureTarget) yield break;
+            if (!CanCapture) yield break;
 
             var capture = chessMatch.GetPieceAt(TargetPosition);
             if (capture != null)
                 yield return new RemoveInstruction(capture);
         }
 
-        public BasicMove(ChessPiece chessPiece, Vector2I targetPosition, bool canCaptureTarget = true)
-            : base(chessPiece, targetPosition)
+        public BasicMove(ChessPiece chessPiece, Vector2I targetPosition, bool canCapture = true)
+            : base(chessPiece, targetPosition, canCapture)
         {
-            CanCaptureTarget = canCaptureTarget;
         }
     }
 }
