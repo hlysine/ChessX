@@ -1,3 +1,4 @@
+using System.Linq;
 using ChessX.Game.Chess.Players;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -82,24 +83,36 @@ namespace ChessX.Game.Chess.Drawables
             SelectedPiece = sender;
         }
 
+        public void SelectMove(MoveButton moveButton)
+        {
+            Player.SelectMove(moveButton.Move);
+            Player.EndTurn();
+        }
+
         private void updateMoveHints()
         {
             moveHintContainer.Clear();
 
             if (selectedPiece == null) return;
 
-            var moves = selectedPiece.ChessPiece.GetAllowedMoves(chessMatch);
+            var moves = selectedPiece.ChessPiece.GetAllowedMoves(chessMatch).GroupBy(m => m.TargetPosition);
 
-            foreach (var move in moves)
+            foreach (var moveGroup in moves)
             {
-                moveHintContainer.Add(new MoveHint(move)
+                if (moveGroup.Count() == 1)
                 {
-                    Action = hint =>
+                    moveHintContainer.Add(new MoveButton(moveGroup.First())
                     {
-                        Player.SelectMove(hint.Move);
-                        Player.EndTurn();
-                    }
-                });
+                        Action = SelectMove
+                    });
+                }
+                else
+                {
+                    moveHintContainer.Add(new CompoundMoveButton(moveGroup)
+                    {
+                        Action = SelectMove
+                    });
+                }
             }
         }
 

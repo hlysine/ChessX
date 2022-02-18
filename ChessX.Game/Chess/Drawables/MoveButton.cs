@@ -8,15 +8,15 @@ using osuTK;
 
 namespace ChessX.Game.Chess.Drawables
 {
-    public class MoveHint : ChessBoardItem
+    public class MoveButton : ChessBoardItem
     {
-        public Move Move { get; }
+        public virtual Move Move { get; }
 
-        public Action<MoveHint> Action { get; set; }
+        public Action<MoveButton> Action { get; set; }
 
         public override Vector2I GridPosition => Move.TargetPosition;
 
-        public MoveHint(Move move)
+        public MoveButton(Move move)
         {
             Move = move;
             Position = move.TargetPosition;
