@@ -16,14 +16,15 @@ namespace ChessX.Game.Chess.Rulesets.Classic
 
         public override async Task ProcessRound()
         {
-            var whiteMove = await WhitePlayer.PerformMoveAsync();
-            executeMove(whiteMove);
-            MoveHistory.Add(whiteMove);
-            await Task.Delay(1000);
-            var blackMove = await BlackPlayer.PerformMoveAsync();
-            executeMove(blackMove);
-            MoveHistory.Add(blackMove);
-            await Task.Delay(1000);
+            WhitePlayer.StartTurn();
+            await WhitePlayer.WaitForTurnEnd();
+            executeMove(WhitePlayer.SelectedMove);
+            await Task.Delay(500);
+
+            BlackPlayer.StartTurn();
+            await BlackPlayer.WaitForTurnEnd();
+            executeMove(BlackPlayer.SelectedMove);
+            await Task.Delay(500);
         }
 
         private void executeMove(Move move)
@@ -34,6 +35,8 @@ namespace ChessX.Game.Chess.Rulesets.Classic
             {
                 instruction.Execute(this);
             }
+
+            MoveHistory.Add(move);
         }
 
         public override bool MatchEnded => false;

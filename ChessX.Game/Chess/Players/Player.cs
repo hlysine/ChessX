@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using ChessX.Game.Chess.Moves;
 using JetBrains.Annotations;
@@ -20,27 +21,63 @@ namespace ChessX.Game.Chess.Players
         }
 
         public readonly Bindable<Move> SelectedMoveBindable = new Bindable<Move>();
+        private readonly LeasedBindable<Move> selectedMoveBindable;
 
         [CanBeNull]
-        public Move SelectedMove
+        public Move SelectedMove => SelectedMoveBindable.Value;
+
+        [CanBeNull]
+        private Move selectedMove
         {
-            get => SelectedMoveBindable.Value;
-            set => SelectedMoveBindable.Value = value;
+            get => selectedMoveBindable.Value;
+            set => selectedMoveBindable.Value = value;
         }
 
-        public async Task<Move> PerformMoveAsync()
+        public delegate void TurnStartHandler(Action<Move> selectMove);
+
+        public event TurnStartHandler TurnStarted;
+
+        public event Action TurnEnded;
+
+        private TaskCompletionSource<Move> turnCompletion;
+
+        protected Player()
         {
-            SelectedMove = null;
+            selectedMoveBindable = SelectedMoveBindable.BeginLease(false);
+        }
+
+        public void StartTurn()
+        {
+            selectedMove = null;
             IsInTurn = true;
+            var localCompletionSource = turnCompletion = new TaskCompletionSource<Move>();
 
-            var move = await PerformMoveInternalAsync().ConfigureAwait(false);
+            void selectMove(Move move)
+            {
+                if (localCompletionSource == turnCompletion)
+                    selectedMove = move;
+            }
 
-            SelectedMove = move;
-            IsInTurn = false;
-
-            return move;
+            OnTurnStart(selectMove);
+            TurnStarted?.Invoke(selectMove);
         }
 
-        protected abstract Task<Move> PerformMoveInternalAsync();
+        public void EndTurn()
+        {
+            IsInTurn = false;
+            turnCompletion.SetResult(SelectedMove);
+            turnCompletion = null;
+            OnTurnEnd();
+            TurnEnded?.Invoke();
+        }
+
+        public Task WaitForTurnEnd()
+        {
+            return turnCompletion.Task;
+        }
+
+        protected virtual void OnTurnStart(Action<Move> selectMove) { }
+
+        protected virtual void OnTurnEnd() { }
     }
 }
