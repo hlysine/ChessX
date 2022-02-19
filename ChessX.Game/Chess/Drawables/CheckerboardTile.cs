@@ -26,13 +26,13 @@ namespace ChessX.Game.Chess.Drawables
 
         protected override bool OnHover(HoverEvent e)
         {
-            this.FadeColour(Colour4.Gray, 100);
+            this.FadeColour(Colour4.Gray, 100, Easing.InOutQuint);
             return false;
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
-            this.FadeColour(getVariantColour(), 100);
+            this.FadeColour(getVariantColour(), 100, Easing.InOutQuint);
         }
 
         protected override bool OnClick(ClickEvent e)

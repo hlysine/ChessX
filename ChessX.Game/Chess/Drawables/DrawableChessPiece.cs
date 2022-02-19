@@ -21,6 +21,9 @@ namespace ChessX.Game.Chess.Drawables
         [Resolved(canBeNull: true)]
         private ChessPieceContainer chessPieceContainer { get; set; }
 
+        [Resolved]
+        private ChessTextureMapper chessTextureMapper { get; set; }
+
         public ChessPiece ChessPiece { get; }
 
         private readonly Bindable<Vector2I> positionBindable = new Bindable<Vector2I>();
@@ -38,12 +41,12 @@ namespace ChessX.Game.Chess.Drawables
         }
 
         [BackgroundDependencyLoader]
-        private void load(TextureStore textures)
+        private void load()
         {
             AddInternal(new Sprite
             {
                 RelativeSizeAxes = Axes.Both,
-                Texture = textures.Get(GetTextureName())
+                Texture = GetTexture()
             });
 
             positionBindable.BindTo(ChessPiece.PositionBindable);
@@ -51,9 +54,9 @@ namespace ChessX.Game.Chess.Drawables
             FinishTransforms(true);
         }
 
-        protected string GetTextureName()
+        protected Texture GetTexture()
         {
-            return $"{ChessPiece.PieceType.ToString().ToLowerInvariant()}_{ChessPiece.Color.ToString().ToLowerInvariant()}";
+            return chessTextureMapper.GetChessPiece(ChessPiece.PieceType, ChessPiece.Color);
         }
 
         protected override void Update()

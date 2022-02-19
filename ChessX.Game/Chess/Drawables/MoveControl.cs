@@ -19,6 +19,7 @@ namespace ChessX.Game.Chess.Drawables
 
         private readonly Container content;
 
+        [Cached(typeof(Container))]
         private readonly MoveHintContainer moveHintContainer;
 
         private DrawableChessPiece selectedPiece;
@@ -48,6 +49,7 @@ namespace ChessX.Game.Chess.Drawables
             RelativeSizeAxes = Axes.Both;
             Add(content = new Container
             {
+                RelativeSizeAxes = Axes.Both,
                 Child = moveHintContainer = new MoveHintContainer { RelativeSizeAxes = Axes.Both }
             });
         }

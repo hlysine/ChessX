@@ -1,3 +1,4 @@
+using ChessX.Game.Chess.Drawables;
 using ChessX.Game.Chess.Rulesets;
 using ChessX.Game.Chess.Rulesets.Classic;
 using osu.Framework.Allocation;
@@ -22,6 +23,9 @@ namespace ChessX.Game
         [Cached(typeof(IBindable<Ruleset>))]
         protected readonly Bindable<Ruleset> Ruleset = new Bindable<Ruleset>(new ClassicRuleset());
 
+        [Cached]
+        protected ChessTextureMapper ChessTextureMapper { get; } = new ChessTextureMapper();
+
         protected ChessXGameBase()
         {
             // Ensure game and tests scale with window size and screen DPI.
@@ -36,6 +40,7 @@ namespace ChessX.Game
         private void load()
         {
             Resources.AddStore(new DllResourceStore(typeof(ChessXResources).Assembly));
+            Add(ChessTextureMapper);
         }
     }
 }
