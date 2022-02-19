@@ -7,7 +7,7 @@ using osu.Framework.Graphics.Effects;
 using osuTK;
 using osuTK.Graphics;
 
-namespace ChessX.Game.Chess.Drawables
+namespace ChessX.Game.Graphics
 {
     public class Dialog : VisibilityContainer
     {

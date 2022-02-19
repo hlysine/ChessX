@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 
-namespace ChessX.Game.Chess.Drawables
+namespace ChessX.Game.Rulesets.UI
 {
     public class CheckerboardTile : Box
     {

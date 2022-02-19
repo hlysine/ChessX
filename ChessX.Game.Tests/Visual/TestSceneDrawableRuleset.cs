@@ -1,9 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChessX.Game.Chess;
-using ChessX.Game.Chess.Drawables;
-using ChessX.Game.Chess.Players;
-using ChessX.Game.Chess.Rulesets;
+using ChessX.Game.Players;
+using ChessX.Game.Rulesets;
+using ChessX.Game.Rulesets.UI;
+using ChessX.Game.Rulesets.UI.MoveSelection;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Testing.Drawables.Steps;
@@ -18,8 +19,8 @@ namespace ChessX.Game.Tests.Visual
         private void load(Bindable<Ruleset> ruleset)
         {
             var classicRuleset = ruleset.Value;
-            MoveControl control1 = new MoveControl();
-            MoveControl control2 = new MoveControl();
+            MoveSelectionControl control1 = new MoveSelectionControl();
+            MoveSelectionControl control2 = new MoveSelectionControl();
             Player player1 = control1.Player;
             Player player2 = control2.Player;
             DrawableRuleset drawableRuleset;

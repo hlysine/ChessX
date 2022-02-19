@@ -1,4 +1,4 @@
-using ChessX.Game.Chess.Drawables;
+using ChessX.Game.Rulesets.UI;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 

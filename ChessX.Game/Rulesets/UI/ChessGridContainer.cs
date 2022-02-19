@@ -1,9 +1,10 @@
+using ChessX.Game.Chess;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
 
-namespace ChessX.Game.Chess.Drawables
+namespace ChessX.Game.Rulesets.UI
 {
     /// <summary>
     /// A container that aligns its children to the chess grid.

@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
+using ChessX.Game.Chess;
 using ChessX.Game.Chess.Moves;
 using JetBrains.Annotations;
 using osu.Framework.Bindables;
 
-namespace ChessX.Game.Chess.Players
+namespace ChessX.Game.Players
 {
     public abstract class Player
     {

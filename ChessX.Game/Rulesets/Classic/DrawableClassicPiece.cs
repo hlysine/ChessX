@@ -1,7 +1,7 @@
 using ChessX.Game.Chess.ChessPieces;
-using ChessX.Game.Chess.Drawables;
+using ChessX.Game.Rulesets.UI;
 
-namespace ChessX.Game.Chess.Rulesets.Classic
+namespace ChessX.Game.Rulesets.Classic
 {
     public class DrawableClassicPiece : DrawableChessPiece
     {

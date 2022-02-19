@@ -1,6 +1,6 @@
 using System;
 using ChessX.Game.Chess.Moves;
-using ChessX.Game.UserInterface;
+using ChessX.Game.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Primitives;
@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osuTK;
 
-namespace ChessX.Game.Chess.Drawables
+namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
     public class MoveButton : ChessBoardItem
     {

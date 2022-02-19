@@ -1,7 +1,7 @@
 using System;
 using ChessX.Game.Chess.Moves;
 
-namespace ChessX.Game.Chess.Players
+namespace ChessX.Game.Players
 {
     public class HumanPlayer : Player
     {

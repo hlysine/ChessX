@@ -1,11 +1,12 @@
 using System.Linq;
+using ChessX.Game.Chess;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
-using static ChessX.Game.Chess.Drawables.CheckerboardTile;
+using static ChessX.Game.Rulesets.UI.CheckerboardTile;
 
-namespace ChessX.Game.Chess.Drawables
+namespace ChessX.Game.Rulesets.UI
 {
     public class Checkerboard : CompositeDrawable
     {

@@ -1,6 +1,7 @@
-using ChessX.Game.Chess.Drawables;
+using ChessX.Game.Chess;
+using ChessX.Game.Rulesets.UI;
 
-namespace ChessX.Game.Chess.Rulesets
+namespace ChessX.Game.Rulesets
 {
     public abstract class Ruleset
     {

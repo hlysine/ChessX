@@ -1,10 +1,11 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ChessX.Game.Chess;
 using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Chess.Moves;
 
-namespace ChessX.Game.Chess.Rulesets.Classic
+namespace ChessX.Game.Rulesets.Classic
 {
     public class ClassicMatch : ChessMatch
     {

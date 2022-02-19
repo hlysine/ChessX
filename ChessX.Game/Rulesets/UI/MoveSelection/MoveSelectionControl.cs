@@ -1,13 +1,15 @@
 using System.Linq;
-using ChessX.Game.Chess.Players;
+using ChessX.Game.Chess;
+using ChessX.Game.Graphics;
+using ChessX.Game.Players;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 
-namespace ChessX.Game.Chess.Drawables
+namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public class MoveControl : Container
+    public class MoveSelectionControl : Container
     {
         [Resolved]
         private ChessPieceContainer chessPieceContainer { get; set; }
@@ -44,7 +46,7 @@ namespace ChessX.Game.Chess.Drawables
             }
         }
 
-        public MoveControl()
+        public MoveSelectionControl()
         {
             RelativeSizeAxes = Axes.Both;
             Add(content = new Container

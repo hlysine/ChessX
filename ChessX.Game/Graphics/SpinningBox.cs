@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 
-namespace ChessX.Game.UserInterface
+namespace ChessX.Game.Graphics
 {
     public class SpinningBox : CompositeDrawable
     {

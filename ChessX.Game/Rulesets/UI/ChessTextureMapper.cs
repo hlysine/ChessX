@@ -1,8 +1,9 @@
+using ChessX.Game.Chess;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Textures;
 
-namespace ChessX.Game.Chess.Drawables
+namespace ChessX.Game.Rulesets.UI
 {
     public class ChessTextureMapper : Component
     {

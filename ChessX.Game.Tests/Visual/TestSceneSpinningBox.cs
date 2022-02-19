@@ -1,4 +1,4 @@
-using ChessX.Game.UserInterface;
+using ChessX.Game.Graphics;
 using osu.Framework.Graphics;
 
 namespace ChessX.Game.Tests.Visual

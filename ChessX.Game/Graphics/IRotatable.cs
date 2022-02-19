@@ -1,4 +1,4 @@
-namespace ChessX.Game.UserInterface
+namespace ChessX.Game.Graphics
 {
     /// <summary>
     /// Used for exposing rotation to children via DI so that children can apply counter-rotation.

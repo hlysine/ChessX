@@ -1,4 +1,4 @@
-using ChessX.Game.UserInterface;
+using ChessX.Game.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;

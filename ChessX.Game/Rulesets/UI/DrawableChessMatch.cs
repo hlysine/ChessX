@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using ChessX.Game.Chess;
 using ChessX.Game.Chess.ChessPieces;
-using ChessX.Game.UserInterface;
+using ChessX.Game.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
 
-namespace ChessX.Game.Chess.Drawables
+namespace ChessX.Game.Rulesets.UI
 {
     [Cached(typeof(IRotatable))]
     public abstract class DrawableChessMatch : Container, IRotatable

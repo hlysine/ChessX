@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using ChessX.Game.Chess;
 using ChessX.Game.Chess.Moves;
-using ChessX.Game.UserInterface;
+using ChessX.Game.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -10,7 +11,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osuTK;
 
-namespace ChessX.Game.Chess.Drawables
+namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
     public class MovePopupDialog : Dialog
     {

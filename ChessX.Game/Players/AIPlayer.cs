@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using ChessX.Game.Chess.Moves;
 using ChessX.Game.Utils;
 
-namespace ChessX.Game.Chess.Players
+namespace ChessX.Game.Players
 {
     public class AIPlayer : Player
     {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Chess.ChessPieces.Utils;
 using ChessX.Game.Chess.Moves;
-using ChessX.Game.Chess.Players;
+using ChessX.Game.Players;
 using JetBrains.Annotations;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Primitives;

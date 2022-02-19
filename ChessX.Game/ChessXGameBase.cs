@@ -1,6 +1,6 @@
-using ChessX.Game.Chess.Drawables;
-using ChessX.Game.Chess.Rulesets;
-using ChessX.Game.Chess.Rulesets.Classic;
+using ChessX.Game.Rulesets;
+using ChessX.Game.Rulesets.Classic;
+using ChessX.Game.Rulesets.UI;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
