@@ -11,6 +11,7 @@ namespace ChessX.Game.Chess.Drawables
         public ChessPieceContainer()
         {
             RelativeSizeAxes = Axes.Both;
+            Padding = new MarginPadding(0.5f);
         }
 
         public delegate void PieceClickedHandler(DrawableChessPiece sender, ClickEvent e);

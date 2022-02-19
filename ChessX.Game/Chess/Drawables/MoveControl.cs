@@ -19,7 +19,7 @@ namespace ChessX.Game.Chess.Drawables
 
         private readonly Container content;
 
-        [Cached(typeof(Container))]
+        [Cached(typeof(IDialogContainer))]
         private readonly MoveHintContainer moveHintContainer;
 
         private DrawableChessPiece selectedPiece;
@@ -50,7 +50,11 @@ namespace ChessX.Game.Chess.Drawables
             Add(content = new Container
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = moveHintContainer = new MoveHintContainer { RelativeSizeAxes = Axes.Both }
+                Child = moveHintContainer = new MoveHintContainer
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Padding = new MarginPadding(0.5f)
+                }
             });
         }
 
@@ -118,7 +122,7 @@ namespace ChessX.Game.Chess.Drawables
             }
         }
 
-        private class MoveHintContainer : VisibilityContainer
+        private class MoveHintContainer : VisibilityContainer, IDialogContainer
         {
             protected override void PopIn() => this.FadeIn(200, Easing.InOutQuint);
 

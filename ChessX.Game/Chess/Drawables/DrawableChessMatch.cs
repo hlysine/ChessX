@@ -48,7 +48,6 @@ namespace ChessX.Game.Chess.Drawables
                 {
                     new ChessGridContainer
                     {
-                        AlignToTileCenter = false,
                         Child = new Checkerboard
                         {
                             Origin = Anchor.Centre,
@@ -58,7 +57,6 @@ namespace ChessX.Game.Chess.Drawables
                     },
                     new ChessGridContainer
                     {
-                        AlignToTileCenter = true,
                         Children = new[]
                         {
                             Underlays,

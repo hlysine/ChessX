@@ -23,11 +23,6 @@ namespace ChessX.Game.Chess.Drawables
             set => content.TargetHeight = value;
         }
 
-        public bool AlignToTileCenter
-        {
-            set => content.AlignToCenter = value;
-        }
-
         public ChessGridContainer()
         {
             Anchor = Anchor.Centre;
@@ -62,14 +57,11 @@ namespace ChessX.Game.Chess.Drawables
 
             internal int TargetHeight { get; set; }
 
-            internal bool AlignToCenter { get; set; }
-
             protected override void Update()
             {
                 base.Update();
 
                 Scale = new Vector2(Parent.ChildSize.X / TargetWidth, Parent.ChildSize.Y / TargetHeight);
-                Padding = AlignToCenter ? new MarginPadding { Horizontal = 0.5f, Vertical = 0.5f } : new MarginPadding();
                 Size = Vector2.Divide(Vector2.One, Scale);
             }
         }

@@ -3,35 +3,23 @@ using System.Collections.Generic;
 using ChessX.Game.Chess.Moves;
 using ChessX.Game.UserInterface;
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osuTK;
-using osuTK.Graphics;
 
 namespace ChessX.Game.Chess.Drawables
 {
-    public class MovePopupDialog : VisibilityContainer
+    public class MovePopupDialog : Dialog
     {
         public Action<Move> Action { get; set; }
 
         public MovePopupDialog(IEnumerable<Move> moves)
         {
-            AutoSizeAxes = Axes.Both;
             Origin = Anchor.Centre;
             Anchor = Anchor.TopLeft;
-            Masking = true;
-            CornerRadius = 0.1f;
-            EdgeEffect = new EdgeEffectParameters
-            {
-                Type = EdgeEffectType.Shadow,
-                Colour = Color4.Black.Opacity(40),
-                Radius = 0.1f,
-            };
 
             AddRange(new Drawable[]
             {
@@ -71,37 +59,6 @@ namespace ChessX.Game.Chess.Drawables
                 };
             }
         }
-
-        protected override void Update()
-        {
-            base.Update();
-
-            var parentPadding = new MarginPadding(0.5f);
-
-            if (X - OriginPosition.X + DrawWidth > Parent.ChildSize.X + parentPadding.Right)
-            {
-                X = Parent.ChildSize.X + parentPadding.Right - DrawWidth + OriginPosition.X;
-            }
-
-            if (X - OriginPosition.X < -parentPadding.Left)
-            {
-                X = -parentPadding.Left + OriginPosition.X;
-            }
-
-            if (Y - OriginPosition.Y + DrawHeight > Parent.ChildSize.Y + parentPadding.Bottom)
-            {
-                Y = Parent.ChildSize.Y + parentPadding.Bottom - DrawHeight + OriginPosition.Y;
-            }
-
-            if (Y - OriginPosition.Y < -parentPadding.Top)
-            {
-                Y = -parentPadding.Top + OriginPosition.Y;
-            }
-        }
-
-        protected override void PopIn() => this.FadeIn(200, Easing.InOutQuint);
-
-        protected override void PopOut() => this.FadeOut(200, Easing.InOutQuint);
 
         private class ChessPieceButton : ClickableContainer
         {

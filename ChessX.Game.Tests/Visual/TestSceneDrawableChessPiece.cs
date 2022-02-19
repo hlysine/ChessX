@@ -29,11 +29,11 @@ namespace ChessX.Game.Tests.Visual
                 RelativeSizeAxes = Axes.Both,
                 Origin = Anchor.Centre,
                 Anchor = Anchor.Centre,
-                AlignToTileCenter = true,
                 Child = new FillFlowContainer
                 {
                     Direction = FillDirection.Full,
                     RelativeSizeAxes = Axes.Both,
+                    Padding = new MarginPadding(0.5f),
                     Children = Enum.GetValues(typeof(ChessPieceType)).Cast<ChessPieceType>().SelectMany(p => new[]
                     {
                         new DrawableClassicPiece(match.CreateChessPiece(p, ChessColor.Black)),
