@@ -18,7 +18,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
         private readonly List<Move> moves;
 
-        private MovePopupDialog dialog;
+        private MoveSelectionPopup selectionPopup;
 
         private Move selectedMove;
         public override Move Move => selectedMove;
@@ -45,26 +45,26 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
         {
             foreach (var child in dialogContainer)
             {
-                if (child is MovePopupDialog popupDialog)
+                if (child is MoveSelectionPopup popupDialog)
                     popupDialog.Hide();
             }
 
-            if (dialog != null)
+            if (selectionPopup != null)
             {
-                dialog.Show();
+                selectionPopup.Show();
                 return true;
             }
 
-            dialog = new MovePopupDialog(moves)
+            selectionPopup = new MoveSelectionPopup(moves)
             {
                 Position = GridPosition
             };
-            dialog.Action = move =>
+            selectionPopup.Action = move =>
             {
                 selectedMove = move;
                 Action.Invoke(this);
             };
-            LoadComponentAsync(dialog, d =>
+            LoadComponentAsync(selectionPopup, d =>
             {
                 dialogContainer.Add(d);
                 d.Show();

@@ -9,12 +9,12 @@ using osuTK.Graphics;
 
 namespace ChessX.Game.Graphics
 {
-    public class Dialog : VisibilityContainer
+    public class Popup : VisibilityContainer
     {
         [Resolved(canBeNull: true)]
         private IDialogContainer dialogContainer { get; set; }
 
-        public Dialog()
+        public Popup()
         {
             AutoSizeAxes = Axes.Both;
             Masking = true;

@@ -13,11 +13,11 @@ using osuTK;
 
 namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public class MovePopupDialog : Dialog
+    public class MoveSelectionPopup : Popup
     {
         public Action<Move> Action { get; set; }
 
-        public MovePopupDialog(IEnumerable<Move> moves)
+        public MoveSelectionPopup(IEnumerable<Move> moves)
         {
             Origin = Anchor.Centre;
             Anchor = Anchor.TopLeft;

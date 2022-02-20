@@ -9,7 +9,7 @@ using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public class MoveSelectionControl : Container
+    public class MoveSelector : Container
     {
         [Resolved]
         private ChessPieceContainer chessPieceContainer { get; set; }
@@ -46,7 +46,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             }
         }
 
-        public MoveSelectionControl()
+        public MoveSelector()
         {
             RelativeSizeAxes = Axes.Both;
             Add(content = new Container

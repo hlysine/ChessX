@@ -19,8 +19,8 @@ namespace ChessX.Game.Tests.Visual
         private void load(Bindable<Ruleset> ruleset)
         {
             var classicRuleset = ruleset.Value;
-            MoveSelectionControl control1 = new MoveSelectionControl();
-            MoveSelectionControl control2 = new MoveSelectionControl();
+            MoveSelector control1 = new MoveSelector();
+            MoveSelector control2 = new MoveSelector();
             Player player1 = control1.Player;
             Player player2 = control2.Player;
             DrawableRuleset drawableRuleset;
