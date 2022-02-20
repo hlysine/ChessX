@@ -14,7 +14,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
     public class CompoundMoveButton : MoveButton
     {
         [Resolved]
-        private IDialogContainer dialogContainer { get; set; }
+        private IPopupContainer popupContainer { get; set; }
 
         private readonly List<Move> moves;
 
@@ -43,7 +43,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
         protected override bool OnClick(ClickEvent e)
         {
-            foreach (var child in dialogContainer)
+            foreach (var child in popupContainer)
             {
                 if (child is MoveSelectionPopup popupDialog)
                     popupDialog.Hide();
@@ -66,7 +66,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             };
             LoadComponentAsync(selectionPopup, d =>
             {
-                dialogContainer.Add(d);
+                popupContainer.Add(d);
                 d.Show();
             });
             return true;

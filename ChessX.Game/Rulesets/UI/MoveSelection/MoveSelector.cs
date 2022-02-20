@@ -21,7 +21,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
         private readonly Container content;
 
-        [Cached(typeof(IDialogContainer))]
+        [Cached(typeof(IPopupContainer))]
         private readonly MoveHintContainer moveHintContainer;
 
         private DrawableChessPiece selectedPiece;
@@ -124,7 +124,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             }
         }
 
-        private class MoveHintContainer : VisibilityContainer, IDialogContainer
+        private class MoveHintContainer : VisibilityContainer, IPopupContainer
         {
             protected override void PopIn() => this.FadeIn(200, Easing.InOutQuint);
 

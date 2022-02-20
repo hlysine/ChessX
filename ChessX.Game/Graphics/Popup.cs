@@ -12,7 +12,7 @@ namespace ChessX.Game.Graphics
     public class Popup : VisibilityContainer
     {
         [Resolved(canBeNull: true)]
-        private IDialogContainer dialogContainer { get; set; }
+        private IPopupContainer popupContainer { get; set; }
 
         public Popup()
         {
@@ -31,14 +31,14 @@ namespace ChessX.Game.Graphics
         {
             base.Update();
 
-            if (dialogContainer == null)
+            if (popupContainer == null)
                 return;
 
-            var containerPadding = dialogContainer.Padding;
+            var containerPadding = popupContainer.Padding;
 
-            if (X - OriginPosition.X + DrawWidth > dialogContainer.ChildSize.X + containerPadding.Right)
+            if (X - OriginPosition.X + DrawWidth > popupContainer.ChildSize.X + containerPadding.Right)
             {
-                X = dialogContainer.ChildSize.X + containerPadding.Right - DrawWidth + OriginPosition.X;
+                X = popupContainer.ChildSize.X + containerPadding.Right - DrawWidth + OriginPosition.X;
             }
 
             if (X - OriginPosition.X < -containerPadding.Left)
@@ -46,9 +46,9 @@ namespace ChessX.Game.Graphics
                 X = -containerPadding.Left + OriginPosition.X;
             }
 
-            if (Y - OriginPosition.Y + DrawHeight > dialogContainer.ChildSize.Y + containerPadding.Bottom)
+            if (Y - OriginPosition.Y + DrawHeight > popupContainer.ChildSize.Y + containerPadding.Bottom)
             {
-                Y = dialogContainer.ChildSize.Y + containerPadding.Bottom - DrawHeight + OriginPosition.Y;
+                Y = popupContainer.ChildSize.Y + containerPadding.Bottom - DrawHeight + OriginPosition.Y;
             }
 
             if (Y - OriginPosition.Y < -containerPadding.Top)
@@ -62,10 +62,23 @@ namespace ChessX.Game.Graphics
         protected override void PopOut() => this.FadeOut(200, Easing.InOutQuint);
     }
 
-    public interface IDialogContainer : IContainerEnumerable<Drawable>, IContainerCollection<Drawable>, IReadOnlyList<Drawable>
+    public interface IPopupContainer : IPopupContainer<Drawable>
     {
-        public MarginPadding Padding { get; }
+    }
 
-        public Vector2 ChildSize { get; }
+    public interface IPopupContainer<T> : IContainerEnumerable<T>, IContainerCollection<T>, ICollection<T>, IReadOnlyList<T>
+        where T : Drawable
+    {
+        MarginPadding Padding { get; }
+
+        Vector2 ChildSize { get; }
+
+        new void Add(T drawable);
+
+        new IReadOnlyList<T> Children { get; set; }
+
+        new bool Remove(T drawable);
+
+        new int Count { get; }
     }
 }
