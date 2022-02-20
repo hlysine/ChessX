@@ -1,7 +1,5 @@
 using System;
 using ChessX.Game.Chess.Moves;
-using ChessX.Game.Graphics;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
@@ -12,9 +10,6 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
     public class MoveButton : ChessBoardItem
     {
-        [Resolved]
-        private IRotatable rotationParent { get; set; }
-
         public virtual Move Move { get; }
 
         public Action<MoveButton> Action { get; set; }
@@ -48,12 +43,6 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
         {
             Action.Invoke(this);
             return true;
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            Rotation = -rotationParent.Rotation;
         }
     }
 }

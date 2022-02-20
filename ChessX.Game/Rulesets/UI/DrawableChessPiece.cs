@@ -1,5 +1,4 @@
 using ChessX.Game.Chess.ChessPieces;
-using ChessX.Game.Graphics;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -13,10 +12,6 @@ namespace ChessX.Game.Rulesets.UI
 {
     public abstract class DrawableChessPiece : ChessBoardItem
     {
-        [CanBeNull]
-        [Resolved(canBeNull: true)]
-        private IRotatable rotationParent { get; set; }
-
         [CanBeNull]
         [Resolved(canBeNull: true)]
         private ChessPieceContainer chessPieceContainer { get; set; }
@@ -57,13 +52,6 @@ namespace ChessX.Game.Rulesets.UI
         protected Texture GetTexture()
         {
             return chessTextureMapper.GetChessPiece(ChessPiece.PieceType, ChessPiece.Color);
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            if (rotationParent != null)
-                Rotation = -rotationParent.Rotation;
         }
 
         protected override bool OnClick(ClickEvent e)

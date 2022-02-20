@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ChessX.Game.Chess;
 using ChessX.Game.Chess.Moves;
 using ChessX.Game.Graphics;
+using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -67,6 +68,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
             public ChessColor Color { get; }
 
+            [CanBeNull]
             [Resolved(canBeNull: true)]
             private IRotatable rotationParent { get; set; }
 
@@ -108,7 +110,8 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             protected override void Update()
             {
                 base.Update();
-                Rotation = -rotationParent.Rotation;
+                if (rotationParent != null)
+                    Rotation = -rotationParent.Rotation;
             }
         }
     }
