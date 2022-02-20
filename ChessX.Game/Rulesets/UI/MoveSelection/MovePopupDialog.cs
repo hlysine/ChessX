@@ -8,7 +8,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osuTK;
 
@@ -72,9 +71,6 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             [Resolved(canBeNull: true)]
             private IRotatable rotationParent { get; set; }
 
-            [Resolved]
-            private ChessTextureMapper chessTextureMapper { get; set; }
-
             public ChessPieceButton(ChessPieceType pieceType, ChessColor color)
             {
                 PieceType = pieceType;
@@ -89,10 +85,11 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
                 Origin = Anchor.Centre;
                 Anchor = Anchor.Centre;
 
-                Child = new Sprite
+                Child = new ChessPieceSprite
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Texture = chessTextureMapper.GetChessPiece(PieceType, Color)
+                    PieceType = PieceType,
+                    Color = Color
                 };
             }
 

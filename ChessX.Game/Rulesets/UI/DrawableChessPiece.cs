@@ -4,8 +4,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Primitives;
-using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Rulesets.UI
@@ -15,9 +13,6 @@ namespace ChessX.Game.Rulesets.UI
         [CanBeNull]
         [Resolved(canBeNull: true)]
         private ChessPieceContainer chessPieceContainer { get; set; }
-
-        [Resolved]
-        private ChessTextureMapper chessTextureMapper { get; set; }
 
         public ChessPiece ChessPiece { get; }
 
@@ -38,20 +33,16 @@ namespace ChessX.Game.Rulesets.UI
         [BackgroundDependencyLoader]
         private void load()
         {
-            AddInternal(new Sprite
+            AddInternal(new ChessPieceSprite
             {
                 RelativeSizeAxes = Axes.Both,
-                Texture = GetTexture()
+                PieceType = ChessPiece.PieceType,
+                Color = ChessPiece.Color
             });
 
             positionBindable.BindTo(ChessPiece.PositionBindable);
             positionBindable.BindValueChanged(e => Schedule(() => OnPositionChanged(e)), true);
             FinishTransforms(true);
-        }
-
-        protected Texture GetTexture()
-        {
-            return chessTextureMapper.GetChessPiece(ChessPiece.PieceType, ChessPiece.Color);
         }
 
         protected override bool OnClick(ClickEvent e)
