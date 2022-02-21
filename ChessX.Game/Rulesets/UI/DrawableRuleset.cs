@@ -7,13 +7,17 @@ namespace ChessX.Game.Rulesets.UI
 {
     public abstract class DrawableRuleset : CompositeDrawable
     {
-        public Match Match { get; }
+    }
 
-        public DrawableMatch DrawableMatch { get; private set; }
+    public abstract class DrawableRuleset<TPiece> : DrawableRuleset where TPiece : Piece
+    {
+        public Match<TPiece> Match { get; }
 
-        public abstract DrawableMatch CreateDrawableMatch();
+        public DrawableMatch<TPiece> DrawableMatch { get; private set; }
 
-        protected DrawableRuleset(Match match)
+        public abstract DrawableMatch<TPiece> CreateDrawableMatch();
+
+        protected DrawableRuleset(Match<TPiece> match)
         {
             Match = match;
             RelativeSizeAxes = Axes.Both;

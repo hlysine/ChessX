@@ -11,23 +11,28 @@ using osuTK;
 
 namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public class CompoundMoveButton : MoveButton
+    public class CompoundMoveButton<TMove> : MoveButton<TMove> where TMove : Move
     {
         [Resolved]
         private IPopupContainer popupContainer { get; set; }
 
-        private readonly List<Move> moves;
+        private readonly List<TMove> moves;
 
-        private MoveSelectionPopup selectionPopup;
+        private readonly PopupCreator popupCreator;
 
-        private Move selectedMove;
-        public override Move Move => selectedMove;
+        private MoveSelectionPopup<TMove> selectionPopup;
+
+        private TMove selectedMove;
+        public override TMove Move => selectedMove;
 
         public override Vector2I GridPosition => Move.TargetPosition;
 
-        public CompoundMoveButton(IEnumerable<Move> move)
+        public delegate MoveSelectionPopup<TMove> PopupCreator(IEnumerable<TMove> moves);
+
+        public CompoundMoveButton(IEnumerable<TMove> move, PopupCreator popupCreator)
             : base(move.First())
         {
+            this.popupCreator = popupCreator;
             moves = move.ToList();
             selectedMove = moves.First();
             AddInternal(new SpriteIcon
@@ -45,7 +50,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
         {
             foreach (var child in popupContainer)
             {
-                if (child is MoveSelectionPopup popupDialog)
+                if (child is MoveSelectionPopup<TMove> popupDialog)
                     popupDialog.Hide();
             }
 
@@ -55,10 +60,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
                 return true;
             }
 
-            selectionPopup = new MoveSelectionPopup(moves)
-            {
-                Position = GridPosition
-            };
+            selectionPopup = popupCreator(moves).With(d => d.Position = GridPosition);
             selectionPopup.Action = move =>
             {
                 selectedMove = move;

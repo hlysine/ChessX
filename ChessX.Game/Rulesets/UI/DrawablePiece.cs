@@ -1,4 +1,4 @@
-using ChessX.Game.Chess.ChessPieces;
+using ChessX.Game.Chess;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -8,47 +8,43 @@ using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Rulesets.UI
 {
-    public abstract class DrawablePiece : ChessBoardItem
+    public abstract class DrawablePiece : GridCoordinateDrawable
     {
         [CanBeNull]
         [Resolved(canBeNull: true)]
-        private ChessPieceContainer chessPieceContainer { get; set; }
+        private PieceContainer pieceContainer { get; set; }
 
-        public Piece Piece { get; }
+        protected override bool OnClick(ClickEvent e)
+        {
+            pieceContainer?.TriggerPieceClick(this, e);
+            return true;
+        }
+    }
+
+    public abstract class DrawablePiece<TPiece> : DrawablePiece where TPiece : Piece
+    {
+        public TPiece Piece { get; }
 
         private readonly Bindable<Vector2I> positionBindable = new Bindable<Vector2I>();
 
         public override Vector2I GridPosition => Piece.Position;
 
-        protected DrawablePiece(Piece piece)
+        protected DrawablePiece(TPiece piece)
         {
             Piece = piece;
-        }
-
-        protected virtual void OnPositionChanged(ValueChangedEvent<Vector2I> e)
-        {
-            this.MoveTo(e.NewValue, 200, Easing.InOutQuint);
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            AddInternal(new ChessPieceSprite
-            {
-                RelativeSizeAxes = Axes.Both,
-                PieceType = Piece.PieceType,
-                Color = Piece.Color
-            });
-
             positionBindable.BindTo(Piece.PositionBindable);
             positionBindable.BindValueChanged(e => Schedule(() => OnPositionChanged(e)), true);
             FinishTransforms(true);
         }
 
-        protected override bool OnClick(ClickEvent e)
+        protected virtual void OnPositionChanged(ValueChangedEvent<Vector2I> e)
         {
-            chessPieceContainer?.TriggerPieceClick(this, e);
-            return true;
+            this.MoveTo(e.NewValue, 200, Easing.InOutQuint);
         }
     }
 }

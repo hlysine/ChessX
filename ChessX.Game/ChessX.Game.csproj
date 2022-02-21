@@ -8,7 +8,4 @@
   <ItemGroup>
     <PackageReference Include="ppy.osu.Framework" Version="2021.1029.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Rulesets\Classic" />
-  </ItemGroup>
 </Project>

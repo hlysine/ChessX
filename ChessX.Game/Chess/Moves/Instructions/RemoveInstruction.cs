@@ -1,15 +1,13 @@
-using ChessX.Game.Chess.ChessPieces;
-
 namespace ChessX.Game.Chess.Moves.Instructions
 {
-    public class RemoveInstruction : Instruction
+    public class RemoveInstruction<TPiece> : Instruction<TPiece> where TPiece : Piece
     {
-        public RemoveInstruction(Piece piece)
+        public RemoveInstruction(TPiece piece)
             : base(piece)
         {
         }
 
-        public override void Execute(Match match)
+        public override void Execute(Match<TPiece> match)
         {
             match.Pieces.Remove(Piece);
         }

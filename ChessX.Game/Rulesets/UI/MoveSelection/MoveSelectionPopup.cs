@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ChessX.Game.Chess;
 using ChessX.Game.Chess.Moves;
 using ChessX.Game.Graphics;
 using JetBrains.Annotations;
@@ -13,11 +12,11 @@ using osuTK;
 
 namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public class MoveSelectionPopup : Popup
+    public abstract class MoveSelectionPopup<TMove> : Popup where TMove : Move
     {
-        public Action<Move> Action { get; set; }
+        public Action<TMove> Action { get; set; }
 
-        public MoveSelectionPopup(IEnumerable<Move> moves)
+        protected MoveSelectionPopup(IEnumerable<TMove> moves)
         {
             Origin = Anchor.Centre;
             Anchor = Anchor.TopLeft;
@@ -34,48 +33,18 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
                     AutoSizeAxes = Axes.Both,
                     Direction = FillDirection.Vertical,
                     Margin = new MarginPadding(0.1f),
-                    ChildrenEnumerable = createButtons(moves)
+                    ChildrenEnumerable = CreateButtons(moves)
                 }
             });
         }
 
-        private IEnumerable<Drawable> createButtons(IEnumerable<Move> moves)
+        protected abstract IEnumerable<Drawable> CreateButtons(IEnumerable<TMove> moves);
+
+        protected abstract class PieceButton : ClickableContainer
         {
-            foreach (var move in moves)
-            {
-                ChessPieceType pieceType;
-
-                if (move is PawnPromotionMove pawnPromotion)
-                    pieceType = pawnPromotion.PromotionChoice;
-                else
-                    pieceType = move.Piece.PieceType;
-
-                yield return new ChessPieceButton(pieceType, move.Piece.Color)
-                {
-                    Action = () =>
-                    {
-                        Hide();
-                        Action?.Invoke(move);
-                    }
-                };
-            }
-        }
-
-        private class ChessPieceButton : ClickableContainer
-        {
-            public ChessPieceType PieceType { get; }
-
-            public ChessColor Color { get; }
-
             [CanBeNull]
             [Resolved(canBeNull: true)]
             private IRotatable rotationParent { get; set; }
-
-            public ChessPieceButton(ChessPieceType pieceType, ChessColor color)
-            {
-                PieceType = pieceType;
-                Color = color;
-            }
 
             [BackgroundDependencyLoader]
             private void load()
@@ -85,13 +54,10 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
                 Origin = Anchor.Centre;
                 Anchor = Anchor.Centre;
 
-                Child = new ChessPieceSprite
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    PieceType = PieceType,
-                    Color = Color
-                };
+                ChildrenEnumerable = CreateContent();
             }
+
+            protected abstract IEnumerable<Drawable> CreateContent();
 
             protected override bool OnHover(HoverEvent e)
             {

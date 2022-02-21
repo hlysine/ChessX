@@ -1,19 +1,16 @@
-using ChessX.Game.Chess.ChessPieces;
-using ChessX.Game.Chess.ChessPieces.Utils;
-
 namespace ChessX.Game.Chess.Moves.Instructions
 {
-    public class ReplaceInstruction : Instruction
+    public class ReplaceInstruction<TPiece> : Instruction<TPiece> where TPiece : Piece
     {
-        public Piece NewPiece { get; }
+        public TPiece NewPiece { get; }
 
-        public ReplaceInstruction(Piece piece, Piece newPiece)
+        public ReplaceInstruction(TPiece piece, TPiece newPiece)
             : base(piece)
         {
             NewPiece = newPiece;
         }
 
-        public override void Execute(Match match)
+        public override void Execute(Match<TPiece> match)
         {
             match.Pieces.Remove(Piece);
             match.Pieces.Add(NewPiece.WithPosition(Piece.Position));

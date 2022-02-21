@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using ChessX.Game.Chess;
-using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Graphics;
+using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -14,22 +14,24 @@ using osuTK;
 namespace ChessX.Game.Rulesets.UI
 {
     [Cached(typeof(IRotatable))]
-    public abstract class DrawableMatch : Container, IRotatable
+    public abstract class DrawableMatch : Container
+    {
+        public Container Underlays { get; } = new Container { RelativeSizeAxes = Axes.Both };
+        public Container Overlays { get; } = new Container { RelativeSizeAxes = Axes.Both };
+    }
+
+    public abstract class DrawableMatch<TPiece> : DrawableMatch, IRotatable where TPiece : Piece
     {
         [Cached(typeof(Match))]
         [Cached(typeof(IHasBoardSize))]
-        public Match Match { get; }
-
-        public Container Underlays { get; } = new Container { RelativeSizeAxes = Axes.Both };
+        public Match<TPiece> Match { get; }
 
         [Cached]
-        public ChessPieceContainer ChessPieceContainer { get; } = new ChessPieceContainer();
+        public PieceContainer PieceContainer { get; } = new PieceContainer();
 
-        public Container Overlays { get; } = new Container { RelativeSizeAxes = Axes.Both };
+        private readonly BindableList<TPiece> pieces = new BindableList<TPiece>();
 
-        private readonly BindableList<Piece> chessPieces = new BindableList<Piece>();
-
-        protected DrawableMatch(Match match)
+        protected DrawableMatch(Match<TPiece> match)
         {
             Match = match;
 
@@ -47,37 +49,29 @@ namespace ChessX.Game.Rulesets.UI
                 RelativeSizeAxes = Axes.Both,
                 Children = new[]
                 {
-                    new ChessGridContainer
+                    new GridCoordinateContainer
                     {
-                        Child = new Checkerboard
+                        ChildrenEnumerable = new[]
                         {
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            RelativeSizeAxes = Axes.Both
-                        }
-                    },
-                    new ChessGridContainer
-                    {
-                        Children = new[]
-                        {
+                            CreateGameBoard(),
                             Underlays,
-                            ChessPieceContainer,
+                            PieceContainer,
                             Overlays
-                        }
+                        }.Where(c => c != null)
                     }
                 }
             });
 
-            chessPieces.BindTo(Match.Pieces);
-            chessPieces.BindCollectionChanged((sender, e) => Schedule(() => OnChessPiecesChanged(sender, e)), true);
+            pieces.BindTo(Match.Pieces);
+            pieces.BindCollectionChanged((sender, e) => Schedule(() => OnChessPiecesChanged(sender, e)), true);
             FinishTransforms(true);
 
             foreach (var player in Match.Players)
             {
                 player.TurnStarted += _ =>
                 {
-                    if (player.RotateChessBoard)
-                        Schedule(() => this.RotateTo(player.Color == ChessColor.White ? 0 : 180, 200, Easing.InOutQuint));
+                    if (player.RotateBoardInTurn)
+                        Schedule(() => this.RotateTo(player.TargetBoardRotation, 200, Easing.InOutQuint));
                 };
             }
         }
@@ -87,37 +81,37 @@ namespace ChessX.Game.Rulesets.UI
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    addRange(e.NewItems.Cast<Piece>());
+                    addRange(e.NewItems.Cast<TPiece>());
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    removeRange(e.OldItems.Cast<Piece>());
+                    removeRange(e.OldItems.Cast<TPiece>());
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    removeRange(e.OldItems.Cast<Piece>());
-                    addRange(e.NewItems.Cast<Piece>());
+                    removeRange(e.OldItems.Cast<TPiece>());
+                    addRange(e.NewItems.Cast<TPiece>());
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
-                    ChessPieceContainer.RemoveAll(p => p is DrawablePiece);
-                    ChessPieceContainer.AddRange(chessPieces.Select(CreateDrawableRepresentation));
+                    PieceContainer.RemoveAll(p => p is DrawablePiece);
+                    PieceContainer.AddRange(pieces.Select(CreateDrawableRepresentation));
                     break;
             }
         }
 
-        private void addRange(IEnumerable<Piece> newItems)
+        private void addRange(IEnumerable<TPiece> newItems)
         {
             var newDrawables = newItems.Select(CreateDrawableRepresentation).ToList();
             newDrawables.ForEach(d => d.MoveTo(d.Piece.Position).FadeInFromZero(200, Easing.InOutQuint));
-            ChessPieceContainer.AddRange(newDrawables);
+            PieceContainer.AddRange(newDrawables);
         }
 
-        private void removeRange(IEnumerable<Piece> oldItems)
+        private void removeRange(IEnumerable<TPiece> oldItems)
         {
-            foreach (var child in ChessPieceContainer)
+            foreach (var child in PieceContainer)
             {
-                if (child is DrawablePiece piece)
+                if (child is DrawablePiece<TPiece> piece)
                 {
                     if (oldItems.Contains(piece.Piece))
                         piece.FadeOut(200, Easing.InOutQuint).Expire();
@@ -125,6 +119,14 @@ namespace ChessX.Game.Rulesets.UI
             }
         }
 
-        protected abstract DrawablePiece CreateDrawableRepresentation(Piece piece);
+        /// <summary>
+        /// The bottom-most drawable displayed in the drawable match, usually a game board.
+        /// <remarks>This game board can be interactive by reporting inputs to a <see cref="GridInputRedirector"/> retrieved via DI.</remarks>
+        /// </summary>
+        /// <returns>The game board, or null if this isn't required.</returns>
+        [CanBeNull]
+        protected abstract Drawable CreateGameBoard();
+
+        protected abstract DrawablePiece<TPiece> CreateDrawableRepresentation(TPiece piece);
     }
 }

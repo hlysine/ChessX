@@ -1,16 +1,15 @@
-using ChessX.Game.Chess.ChessPieces;
 using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.Moves.Instructions
 {
-    public class MoveInstruction : PositionalInstruction
+    public class MoveInstruction<TPiece> : PositionalInstruction<TPiece> where TPiece : Piece
     {
-        public MoveInstruction(Piece piece, Vector2I position)
+        public MoveInstruction(TPiece piece, Vector2I position)
             : base(piece, position)
         {
         }
 
-        public override void Execute(Match match)
+        public override void Execute(Match<TPiece> match)
         {
             Piece.Position = Position;
         }

@@ -1,5 +1,5 @@
+using System.Linq;
 using ChessX.Game.Rulesets;
-using ChessX.Game.Rulesets.Classic;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -19,8 +19,11 @@ namespace ChessX.Game
         protected override Container<Drawable> Content { get; }
 
         [Cached]
+        protected readonly RulesetStore RulesetStore;
+
+        [Cached]
         [Cached(typeof(IBindable<Ruleset>))]
-        protected readonly Bindable<Ruleset> Ruleset = new Bindable<Ruleset>(new ClassicRuleset());
+        protected readonly Bindable<Ruleset> Ruleset;
 
         protected ChessXGameBase()
         {
@@ -30,6 +33,9 @@ namespace ChessX.Game
                 // You may want to change TargetDrawSize to your "default" resolution, which will decide how things scale and position when using absolute coordinates.
                 TargetDrawSize = new Vector2(1920, 1080)
             });
+
+            RulesetStore = new RulesetStore();
+            Ruleset = new Bindable<Ruleset>(RulesetStore.Rulesets.First().CreateInstance());
         }
 
         [BackgroundDependencyLoader]

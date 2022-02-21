@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using ChessX.Game.Chess;
+using ChessX.Game.Chess.Moves;
 using ChessX.Game.Graphics;
 using ChessX.Game.Players;
 using osu.Framework.Allocation;
@@ -9,24 +11,24 @@ using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public class MoveSelector : Container
+    public abstract class MoveSelector<TPiece> : Container where TPiece : Piece
     {
         [Resolved]
-        private ChessPieceContainer chessPieceContainer { get; set; }
+        private PieceContainer pieceContainer { get; set; }
 
         [Resolved]
         private Match match { get; set; }
 
-        public HumanPlayer Player { get; } = new HumanPlayer();
+        public IControllablePlayer<TPiece> Player { get; }
 
         private readonly Container content;
 
         [Cached(typeof(IPopupContainer))]
         private readonly MoveHintContainer moveHintContainer;
 
-        private DrawablePiece selectedPiece;
+        private DrawablePiece<TPiece> selectedPiece;
 
-        public DrawablePiece SelectedPiece
+        public DrawablePiece<TPiece> SelectedPiece
         {
             get => selectedPiece;
             set
@@ -46,9 +48,10 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             }
         }
 
-        public MoveSelector()
+        protected MoveSelector()
         {
             RelativeSizeAxes = Axes.Both;
+            Player = CreatePlayer();
             Add(content = new Container
             {
                 RelativeSizeAxes = Axes.Both,
@@ -60,10 +63,12 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             });
         }
 
+        protected abstract IControllablePlayer<TPiece> CreatePlayer();
+
         [BackgroundDependencyLoader]
         private void load()
         {
-            chessPieceContainer.PieceClicked += handlePieceClicked;
+            pieceContainer.PieceClicked += handlePieceClicked;
 
             Player.TurnStarted += _ =>
             {
@@ -86,12 +91,14 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
         private void handlePieceClicked(DrawablePiece sender, ClickEvent e)
         {
-            if (sender.Piece.Color != Player.Color) return;
+            if (!(sender is DrawablePiece<TPiece> drawablePiece)) return;
 
-            SelectedPiece = sender;
+            OnPieceClicked(drawablePiece, e);
         }
 
-        public void SelectMove(MoveButton moveButton)
+        protected abstract void OnPieceClicked(DrawablePiece<TPiece> sender, ClickEvent e);
+
+        public void SelectMove(MoveButton<Move<TPiece>> moveButton)
         {
             Player.SelectMove(moveButton.Move);
             Player.EndTurn();
@@ -103,26 +110,28 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
             if (selectedPiece == null) return;
 
-            var moves = selectedPiece.Piece.GetAllowedMoves(match).GroupBy(m => m.TargetPosition);
+            var moves = selectedPiece.Piece.GetAllowedMoves(match).Cast<Move<TPiece>>().GroupBy(m => m.TargetPosition);
 
             foreach (var moveGroup in moves)
             {
                 if (moveGroup.Count() == 1)
                 {
-                    moveHintContainer.Add(new MoveButton(moveGroup.First())
+                    moveHintContainer.Add(new MoveButton<Move<TPiece>>(moveGroup.First())
                     {
                         Action = SelectMove
                     });
                 }
                 else
                 {
-                    moveHintContainer.Add(new CompoundMoveButton(moveGroup)
+                    moveHintContainer.Add(new CompoundMoveButton<Move<TPiece>>(moveGroup, CreateMoveSelectionPopup)
                     {
                         Action = SelectMove
                     });
                 }
             }
         }
+
+        protected abstract MoveSelectionPopup<Move<TPiece>> CreateMoveSelectionPopup(IEnumerable<Move<TPiece>> moves);
 
         private class MoveHintContainer : VisibilityContainer, IPopupContainer
         {

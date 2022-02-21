@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
-using ChessX.Game.Chess;
-using ChessX.Game.Players;
 using ChessX.Game.Rulesets;
-using ChessX.Game.Rulesets.UI;
-using ChessX.Game.Rulesets.UI.MoveSelection;
+using ChessX.Game.Rulesets.Chess;
+using ChessX.Game.Rulesets.Chess.UI;
+using ChessX.Game.Rulesets.Chess.UI.MoveSelection;
+using ChessX.Game.Utils;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Testing.Drawables.Steps;
@@ -18,17 +18,15 @@ namespace ChessX.Game.Tests.Visual
         [BackgroundDependencyLoader]
         private void load(Bindable<Ruleset> ruleset)
         {
-            var classicRuleset = ruleset.Value;
-            MoveSelector control1 = new MoveSelector();
-            MoveSelector control2 = new MoveSelector();
-            Player player1 = control1.Player;
-            Player player2 = control2.Player;
-            DrawableRuleset drawableRuleset;
-            var chessMatch = classicRuleset.CreateMatch();
-            chessMatch.AddPlayer(player1, ChessColor.White);
-            chessMatch.AddPlayer(player2, ChessColor.Black);
+            var chessRuleset = (ChessRuleset)ruleset.Value;
+            ChessMoveSelector control1 = new ChessMoveSelector();
+            ChessMoveSelector control2 = new ChessMoveSelector();
+            DrawableChessRuleset drawableRuleset;
+            var chessMatch = (ChessMatch)chessRuleset.CreateMatch();
+            chessMatch.AddPlayer(control1.Player.With(p => p.Color = ChessColor.White));
+            chessMatch.AddPlayer(control2.Player.With(p => p.Color = ChessColor.Black));
             chessMatch.Initialize();
-            Add(drawableRuleset = classicRuleset.CreateDrawableRuleset(chessMatch));
+            Add(drawableRuleset = (DrawableChessRuleset)chessRuleset.CreateDrawableRuleset(chessMatch));
             drawableRuleset.DrawableMatch.Overlays.Add(control1);
             drawableRuleset.DrawableMatch.Overlays.Add(control2);
 

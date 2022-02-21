@@ -1,4 +1,5 @@
 using ChessX.Game.Chess;
+using ChessX.Game.Rulesets.Chess.UI;
 using ChessX.Game.Rulesets.UI;
 
 namespace ChessX.Game.Rulesets.Chess
@@ -9,6 +10,6 @@ namespace ChessX.Game.Rulesets.Chess
 
         public override Match CreateMatch() => new ChessMatch();
 
-        public override DrawableRuleset CreateDrawableRuleset(Match match) => new DrawableChessRuleset(match);
+        public override DrawableRuleset CreateDrawableRuleset(Match match) => new DrawableChessRuleset((ChessMatch)match);
     }
 }

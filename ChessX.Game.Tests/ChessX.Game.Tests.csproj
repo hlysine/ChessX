@@ -5,6 +5,7 @@
     <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
   <ItemGroup Label="Project References">
+    <ProjectReference Include="..\ChessX.Game.Rulesets.Chess\ChessX.Game.Rulesets.Chess.csproj" />
     <ProjectReference Include="..\ChessX.Game\ChessX.Game.csproj" />
   </ItemGroup>
   <ItemGroup Label="Package References">

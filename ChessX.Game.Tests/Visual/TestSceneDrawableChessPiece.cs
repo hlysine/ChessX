@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using ChessX.Game.Chess;
 using ChessX.Game.Rulesets;
-using ChessX.Game.Rulesets.Classic;
+using ChessX.Game.Rulesets.Chess;
+using ChessX.Game.Rulesets.Chess.UI;
 using ChessX.Game.Rulesets.UI;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -23,8 +23,8 @@ namespace ChessX.Game.Tests.Visual
                 RelativeSizeAxes = Axes.Both
             });
 
-            var match = ruleset.Value.CreateMatch();
-            Add(new ChessGridContainer
+            var match = (ChessMatch)ruleset.Value.CreateMatch();
+            Add(new GridCoordinateContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 Origin = Anchor.Centre,
@@ -36,8 +36,8 @@ namespace ChessX.Game.Tests.Visual
                     Padding = new MarginPadding(0.5f),
                     Children = Enum.GetValues(typeof(ChessPieceType)).Cast<ChessPieceType>().SelectMany(p => new[]
                     {
-                        new DrawableClassicPiece(match.CreatePiece(p, ChessColor.Black)),
-                        new DrawableClassicPiece(match.CreatePiece(p, ChessColor.White))
+                        new DrawableChessPiece(match.CreatePiece(p, ChessColor.Black)),
+                        new DrawableChessPiece(match.CreatePiece(p, ChessColor.White))
                     }).ToList()
                 }
             });
