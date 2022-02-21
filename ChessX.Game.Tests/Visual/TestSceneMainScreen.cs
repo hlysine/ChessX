@@ -8,7 +8,7 @@ namespace ChessX.Game.Tests.Visual
     {
         public TestSceneMainScreen()
         {
-            Add(new ScreenStack(new MainScreen()) { RelativeSizeAxes = Axes.Both });
+            Add(new ScreenStack(new MenuScreen()) { RelativeSizeAxes = Axes.Both });
         }
     }
 }
