@@ -9,7 +9,7 @@ namespace ChessX.Game.Players
 {
     public abstract class Player
     {
-        public ChessMatch ChessMatch { get; set; }
+        public Match Match { get; set; }
 
         public ChessColor Color { get; set; }
 

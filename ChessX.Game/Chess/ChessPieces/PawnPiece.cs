@@ -4,7 +4,7 @@ using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.ChessPieces
 {
-    public class PawnPiece : ChessPiece
+    public class PawnPiece : Piece
     {
         private static readonly ChessPieceType[] promotion_choices =
         {
@@ -21,7 +21,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public override ChessPieceType PieceType => ChessPieceType.Pawn;
 
-        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion)
+        protected override IEnumerable<Move> GetPossibleMoves(Match match, bool noRecursion)
         {
             // Moving forward
             int forwardOffset = Color == ChessColor.Black ? 1 : -1;
@@ -73,7 +73,7 @@ namespace ChessX.Game.Chess.ChessPieces
                 yield return new EnPassantMove(this, new Vector2I(X + 1, Y + forwardOffset));
         }
 
-        private bool canCapture(ChessMatch match, Vector2I position)
+        private bool canCapture(Match match, Vector2I position)
         {
             if (!match.IsInBounds(position)) return false;
 
@@ -81,7 +81,7 @@ namespace ChessX.Game.Chess.ChessPieces
             return targetPiece != null && targetPiece.Color.IsOppositeOf(Color);
         }
 
-        private bool canEnPassant(ChessMatch match, int x, int y)
+        private bool canEnPassant(Match match, int x, int y)
         {
             if (!match.IsInBounds(x, y)) return false;
 

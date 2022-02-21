@@ -8,21 +8,21 @@ using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Rulesets.UI
 {
-    public abstract class DrawableChessPiece : ChessBoardItem
+    public abstract class DrawablePiece : ChessBoardItem
     {
         [CanBeNull]
         [Resolved(canBeNull: true)]
         private ChessPieceContainer chessPieceContainer { get; set; }
 
-        public ChessPiece ChessPiece { get; }
+        public Piece Piece { get; }
 
         private readonly Bindable<Vector2I> positionBindable = new Bindable<Vector2I>();
 
-        public override Vector2I GridPosition => ChessPiece.Position;
+        public override Vector2I GridPosition => Piece.Position;
 
-        protected DrawableChessPiece(ChessPiece chessPiece)
+        protected DrawablePiece(Piece piece)
         {
-            ChessPiece = chessPiece;
+            Piece = piece;
         }
 
         protected virtual void OnPositionChanged(ValueChangedEvent<Vector2I> e)
@@ -36,11 +36,11 @@ namespace ChessX.Game.Rulesets.UI
             AddInternal(new ChessPieceSprite
             {
                 RelativeSizeAxes = Axes.Both,
-                PieceType = ChessPiece.PieceType,
-                Color = ChessPiece.Color
+                PieceType = Piece.PieceType,
+                Color = Piece.Color
             });
 
-            positionBindable.BindTo(ChessPiece.PositionBindable);
+            positionBindable.BindTo(Piece.PositionBindable);
             positionBindable.BindValueChanged(e => Schedule(() => OnPositionChanged(e)), true);
             FinishTransforms(true);
         }

@@ -4,14 +4,14 @@ namespace ChessX.Game.Chess.Moves.Instructions
 {
     public class RemoveInstruction : Instruction
     {
-        public RemoveInstruction(ChessPiece chessPiece)
-            : base(chessPiece)
+        public RemoveInstruction(Piece piece)
+            : base(piece)
         {
         }
 
-        public override void Execute(ChessMatch chessMatch)
+        public override void Execute(Match match)
         {
-            chessMatch.ChessPieces.Remove(ChessPiece);
+            match.Pieces.Remove(Piece);
         }
     }
 }

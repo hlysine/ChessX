@@ -6,9 +6,9 @@ namespace ChessX.Game.Chess.ChessPieces.Utils
 {
     public static class ChessPieceMoveUtils
     {
-        public static IEnumerable<Move> GenerateMovesForDirection(ChessPiece chessPiece, ChessMatch match, Vector2I offset)
+        public static IEnumerable<Move> GenerateMovesForDirection(Piece piece, Match match, Vector2I offset)
         {
-            var currentPos = chessPiece.Position + offset;
+            var currentPos = piece.Position + offset;
 
             while (match.IsInBounds(currentPos))
             {
@@ -16,13 +16,13 @@ namespace ChessX.Game.Chess.ChessPieces.Utils
 
                 if (currentPiece != null)
                 {
-                    if (currentPiece.Color.IsOppositeOf(chessPiece.Color))
-                        yield return new BasicMove(chessPiece, currentPos);
+                    if (currentPiece.Color.IsOppositeOf(piece.Color))
+                        yield return new BasicMove(piece, currentPos);
 
                     yield break;
                 }
 
-                yield return new BasicMove(chessPiece, currentPos);
+                yield return new BasicMove(piece, currentPos);
 
                 currentPos += offset;
             }

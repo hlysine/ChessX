@@ -7,19 +7,19 @@ namespace ChessX.Game.Chess.Moves
 {
     public class BasicMove : OptionalCaptureMove
     {
-        public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)
+        public override IEnumerable<Instruction> GetInstructions(Match match)
         {
-            yield return new MoveInstruction(ChessPiece, TargetPosition);
+            yield return new MoveInstruction(Piece, TargetPosition);
 
             if (!CanCapture) yield break;
 
-            var capture = chessMatch.GetPieceAt(TargetPosition);
+            var capture = match.GetPieceAt(TargetPosition);
             if (capture != null)
                 yield return new RemoveInstruction(capture);
         }
 
-        public BasicMove(ChessPiece chessPiece, Vector2I targetPosition, bool canCapture = true)
-            : base(chessPiece, targetPosition, canCapture)
+        public BasicMove(Piece piece, Vector2I targetPosition, bool canCapture = true)
+            : base(piece, targetPosition, canCapture)
         {
         }
     }

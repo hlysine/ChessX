@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+      <OutputType>Library</OutputType>
+      <Description>The classic rules of chess.</Description>
+    </PropertyGroup>
+
+  <PropertyGroup Label="Nuget">
+    <Title>Chess</Title>
+    <PackageId>ChessX.Game.Rulesets.Chess</PackageId>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup Label="Project References">
+    <ProjectReference Include="..\ChessX.Game\ChessX.Game.csproj" />
+  </ItemGroup>
+
+</Project>

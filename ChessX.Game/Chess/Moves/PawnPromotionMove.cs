@@ -9,23 +9,23 @@ namespace ChessX.Game.Chess.Moves
     {
         public ChessPieceType PromotionChoice { get; }
 
-        public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)
+        public override IEnumerable<Instruction> GetInstructions(Match match)
         {
-            yield return new MoveInstruction(ChessPiece, TargetPosition);
+            yield return new MoveInstruction(Piece, TargetPosition);
 
-            var newChessPiece = chessMatch.CreateChessPiece(PromotionChoice, ChessPiece.Color);
+            var newChessPiece = match.CreatePiece(PromotionChoice, Piece.Color);
             newChessPiece.Position = TargetPosition;
-            yield return new ReplaceInstruction(ChessPiece, newChessPiece);
+            yield return new ReplaceInstruction(Piece, newChessPiece);
 
             if (!CanCapture) yield break;
 
-            var capture = chessMatch.GetPieceAt(TargetPosition);
+            var capture = match.GetPieceAt(TargetPosition);
             if (capture != null)
                 yield return new RemoveInstruction(capture);
         }
 
-        public PawnPromotionMove(ChessPiece chessPiece, Vector2I targetPosition, ChessPieceType promotionChoice, bool canCapture)
-            : base(chessPiece, targetPosition, canCapture)
+        public PawnPromotionMove(Piece piece, Vector2I targetPosition, ChessPieceType promotionChoice, bool canCapture)
+            : base(piece, targetPosition, canCapture)
         {
             PromotionChoice = promotionChoice;
         }

@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.ChessPieces
 {
-    public abstract class ChessPiece
+    public abstract class Piece
     {
         public ChessColor Color { get; }
         public abstract ChessPieceType PieceType { get; }
@@ -30,17 +30,17 @@ namespace ChessX.Game.Chess.ChessPieces
             set => Position = new Vector2I(Position.X, value);
         }
 
-        protected ChessPiece(ChessColor color)
+        protected Piece(ChessColor color)
         {
             Color = color;
         }
 
-        public IEnumerable<Move> GetAllowedMoves(ChessMatch match, bool noRecursion = false)
+        public IEnumerable<Move> GetAllowedMoves(Match match, bool noRecursion = false)
         {
             // todo: filter by moves that would still leave the player in check
             return GetPossibleMoves(match, noRecursion);
         }
 
-        protected abstract IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion);
+        protected abstract IEnumerable<Move> GetPossibleMoves(Match match, bool noRecursion);
     }
 }

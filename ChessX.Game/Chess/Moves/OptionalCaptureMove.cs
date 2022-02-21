@@ -7,8 +7,8 @@ namespace ChessX.Game.Chess.Moves
     {
         public override bool CanCapture { get; }
 
-        protected OptionalCaptureMove(ChessPiece chessPiece, Vector2I targetPosition, bool canCapture = true)
-            : base(chessPiece, targetPosition)
+        protected OptionalCaptureMove(Piece piece, Vector2I targetPosition, bool canCapture = true)
+            : base(piece, targetPosition)
         {
             CanCapture = canCapture;
         }

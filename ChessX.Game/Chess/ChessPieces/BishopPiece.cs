@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.ChessPieces
 {
-    public class BishopPiece : ChessPiece
+    public class BishopPiece : Piece
     {
         public BishopPiece(ChessColor color)
             : base(color)
@@ -14,7 +14,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public override ChessPieceType PieceType => ChessPieceType.Bishop;
 
-        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion)
+        protected override IEnumerable<Move> GetPossibleMoves(Match match, bool noRecursion)
         {
             foreach (var move in ChessPieceMoveUtils.GenerateMovesForDirection(this, match, new Vector2I(1, 1)))
                 yield return move;

@@ -5,14 +5,14 @@ namespace ChessX.Game.Chess.Moves.Instructions
 {
     public class MoveInstruction : PositionalInstruction
     {
-        public MoveInstruction(ChessPiece chessPiece, Vector2I position)
-            : base(chessPiece, position)
+        public MoveInstruction(Piece piece, Vector2I position)
+            : base(piece, position)
         {
         }
 
-        public override void Execute(ChessMatch chessMatch)
+        public override void Execute(Match match)
         {
-            ChessPiece.Position = Position;
+            Piece.Position = Position;
         }
     }
 }

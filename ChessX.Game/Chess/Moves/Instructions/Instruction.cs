@@ -4,13 +4,13 @@ namespace ChessX.Game.Chess.Moves.Instructions
 {
     public abstract class Instruction
     {
-        public ChessPiece ChessPiece { get; }
+        public Piece Piece { get; }
 
-        protected Instruction(ChessPiece chessPiece)
+        protected Instruction(Piece piece)
         {
-            ChessPiece = chessPiece;
+            Piece = piece;
         }
 
-        public abstract void Execute(ChessMatch chessMatch);
+        public abstract void Execute(Match match);
     }
 }

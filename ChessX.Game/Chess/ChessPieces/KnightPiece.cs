@@ -4,7 +4,7 @@ using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.ChessPieces
 {
-    public class KnightPiece : ChessPiece
+    public class KnightPiece : Piece
     {
         private static readonly Vector2I[] possible_offsets =
         {
@@ -25,7 +25,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public override ChessPieceType PieceType => ChessPieceType.Knight;
 
-        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion)
+        protected override IEnumerable<Move> GetPossibleMoves(Match match, bool noRecursion)
         {
             foreach (var offset in possible_offsets)
             {

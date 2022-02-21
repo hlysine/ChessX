@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.ChessPieces
 {
-    public class QueenPiece : ChessPiece
+    public class QueenPiece : Piece
     {
         public QueenPiece(ChessColor color)
             : base(color)
@@ -14,7 +14,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public override ChessPieceType PieceType => ChessPieceType.Queen;
 
-        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion)
+        protected override IEnumerable<Move> GetPossibleMoves(Match match, bool noRecursion)
         {
             for (int i = -1; i <= 1; i++)
             {

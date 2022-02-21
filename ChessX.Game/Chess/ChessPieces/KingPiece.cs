@@ -7,7 +7,7 @@ using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess.ChessPieces
 {
-    public class KingPiece : ChessPiece
+    public class KingPiece : Piece
     {
         public KingPiece(ChessColor color)
             : base(color)
@@ -16,7 +16,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
         public override ChessPieceType PieceType => ChessPieceType.King;
 
-        protected override IEnumerable<Move> GetPossibleMoves(ChessMatch match, bool noRecursion)
+        protected override IEnumerable<Move> GetPossibleMoves(Match match, bool noRecursion)
         {
             for (int i = X - 1; i <= X + 1; i++)
             {
@@ -38,7 +38,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
             if (match.IsInCheck(Color)) yield break;
 
-            var rooks = match.ChessPieces.Where(p => p.Color == Color && p.PieceType == ChessPieceType.Rook)
+            var rooks = match.Pieces.Where(p => p.Color == Color && p.PieceType == ChessPieceType.Rook)
                              .Cast<RookPiece>()
                              .Where(p => !match.HasMovedSinceStart(p));
 
@@ -46,7 +46,7 @@ namespace ChessX.Game.Chess.ChessPieces
 
             foreach (var rook in rooks)
             {
-                if (match.ChessPieces.Any(p => p.Position.Y == Y && MathUtils.InBetween(p.Position.X, rook.X, X)))
+                if (match.Pieces.Any(p => p.Position.Y == Y && MathUtils.InBetween(p.Position.X, rook.X, X)))
                     continue;
 
                 var targetPos = new Vector2I(X + Math.Sign(rook.X - X) * 2, Y);

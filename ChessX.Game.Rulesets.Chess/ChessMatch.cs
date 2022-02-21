@@ -5,11 +5,11 @@ using ChessX.Game.Chess;
 using ChessX.Game.Chess.ChessPieces;
 using ChessX.Game.Chess.Moves;
 
-namespace ChessX.Game.Rulesets.Classic
+namespace ChessX.Game.Rulesets.Chess
 {
-    public class ClassicMatch : ChessMatch
+    public class ChessMatch : Match
     {
-        public override ChessPiece CreateChessPiece(ChessPieceType pieceType, ChessColor color) => pieceType switch
+        public override Piece CreatePiece(ChessPieceType pieceType, ChessColor color) => pieceType switch
         {
             ChessPieceType.King => new KingPiece(color),
             ChessPieceType.Queen => new QueenPiece(color),

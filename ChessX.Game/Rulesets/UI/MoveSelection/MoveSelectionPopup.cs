@@ -48,9 +48,9 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
                 if (move is PawnPromotionMove pawnPromotion)
                     pieceType = pawnPromotion.PromotionChoice;
                 else
-                    pieceType = move.ChessPiece.PieceType;
+                    pieceType = move.Piece.PieceType;
 
-                yield return new ChessPieceButton(pieceType, move.ChessPiece.Color)
+                yield return new ChessPieceButton(pieceType, move.Piece.Color)
                 {
                     Action = () =>
                     {

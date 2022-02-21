@@ -5,7 +5,8 @@
       "ChessX.Desktop\\ChessX.Desktop.csproj",
       "ChessX.Game\\ChessX.Game.csproj",
       "ChessX.Game.Tests\\ChessX.Game.Tests.csproj",
-      "ChessX.Resources\\ChessX.Resources.csproj"
+      "ChessX.Resources\\ChessX.Resources.csproj",
+      "ChessX.Game.Rulesets.Chess\\ChessX.Game.Rulesets.Chess.csproj"
     ]
   }
 }

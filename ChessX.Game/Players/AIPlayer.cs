@@ -14,7 +14,7 @@ namespace ChessX.Game.Players
         {
             Task.Run(() =>
             {
-                selectMove(ChessMatch.ChessPieces.Where(p => p.Color == Color).SelectMany(p => p.GetAllowedMoves(ChessMatch)).GetRandom());
+                selectMove(Match.Pieces.Where(p => p.Color == Color).SelectMany(p => p.GetAllowedMoves(Match)).GetRandom());
                 EndTurn();
             });
         }

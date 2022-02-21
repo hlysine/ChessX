@@ -14,11 +14,11 @@ namespace ChessX.Game.Rulesets.UI
             Padding = new MarginPadding(0.5f);
         }
 
-        public delegate void PieceClickedHandler(DrawableChessPiece sender, ClickEvent e);
+        public delegate void PieceClickedHandler(DrawablePiece sender, ClickEvent e);
 
         public event PieceClickedHandler PieceClicked;
 
-        public void TriggerPieceClick(DrawableChessPiece sender, ClickEvent e)
+        public void TriggerPieceClick(DrawablePiece sender, ClickEvent e)
         {
             PieceClicked?.Invoke(sender, e);
         }

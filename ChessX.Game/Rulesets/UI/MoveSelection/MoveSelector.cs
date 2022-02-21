@@ -15,7 +15,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
         private ChessPieceContainer chessPieceContainer { get; set; }
 
         [Resolved]
-        private ChessMatch chessMatch { get; set; }
+        private Match match { get; set; }
 
         public HumanPlayer Player { get; } = new HumanPlayer();
 
@@ -24,9 +24,9 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
         [Cached(typeof(IPopupContainer))]
         private readonly MoveHintContainer moveHintContainer;
 
-        private DrawableChessPiece selectedPiece;
+        private DrawablePiece selectedPiece;
 
-        public DrawableChessPiece SelectedPiece
+        public DrawablePiece SelectedPiece
         {
             get => selectedPiece;
             set
@@ -84,9 +84,9 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             };
         }
 
-        private void handlePieceClicked(DrawableChessPiece sender, ClickEvent e)
+        private void handlePieceClicked(DrawablePiece sender, ClickEvent e)
         {
-            if (sender.ChessPiece.Color != Player.Color) return;
+            if (sender.Piece.Color != Player.Color) return;
 
             SelectedPiece = sender;
         }
@@ -103,7 +103,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
             if (selectedPiece == null) return;
 
-            var moves = selectedPiece.ChessPiece.GetAllowedMoves(chessMatch).GroupBy(m => m.TargetPosition);
+            var moves = selectedPiece.Piece.GetAllowedMoves(match).GroupBy(m => m.TargetPosition);
 
             foreach (var moveGroup in moves)
             {

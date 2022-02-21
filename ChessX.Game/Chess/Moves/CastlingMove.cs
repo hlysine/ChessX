@@ -8,48 +8,48 @@ namespace ChessX.Game.Chess.Moves
 {
     public class CastlingMove : Move
     {
-        public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)
+        public override IEnumerable<Instruction> GetInstructions(Match match)
         {
-            yield return new MoveInstruction(ChessPiece, TargetPosition);
+            yield return new MoveInstruction(Piece, TargetPosition);
 
-            if (ChessPiece.PieceType == ChessPieceType.King)
+            if (Piece.PieceType == ChessPieceType.King)
             {
-                if (TargetPosition.X < ChessPiece.X)
+                if (TargetPosition.X < Piece.X)
                 {
                     yield return new MoveInstruction(
-                        chessMatch.ChessPieces.First(p => p.Color == ChessPiece.Color && p.PieceType == ChessPieceType.Rook && p.X < ChessPiece.X),
+                        match.Pieces.First(p => p.Color == Piece.Color && p.PieceType == ChessPieceType.Rook && p.X < Piece.X),
                         new Vector2I(TargetPosition.X + 1, TargetPosition.Y)
                     );
                 }
                 else
                 {
                     yield return new MoveInstruction(
-                        chessMatch.ChessPieces.First(p => p.Color == ChessPiece.Color && p.PieceType == ChessPieceType.Rook && p.X > ChessPiece.X),
+                        match.Pieces.First(p => p.Color == Piece.Color && p.PieceType == ChessPieceType.Rook && p.X > Piece.X),
                         new Vector2I(TargetPosition.X - 1, TargetPosition.Y)
                     );
                 }
             }
             else
             {
-                if (TargetPosition.X < ChessPiece.X)
+                if (TargetPosition.X < Piece.X)
                 {
                     yield return new MoveInstruction(
-                        chessMatch.ChessPieces.First(p => p.Color == ChessPiece.Color && p.PieceType == ChessPieceType.King && p.X < ChessPiece.X),
+                        match.Pieces.First(p => p.Color == Piece.Color && p.PieceType == ChessPieceType.King && p.X < Piece.X),
                         new Vector2I(TargetPosition.X + 1, TargetPosition.Y)
                     );
                 }
                 else
                 {
                     yield return new MoveInstruction(
-                        chessMatch.ChessPieces.First(p => p.Color == ChessPiece.Color && p.PieceType == ChessPieceType.King && p.X > ChessPiece.X),
+                        match.Pieces.First(p => p.Color == Piece.Color && p.PieceType == ChessPieceType.King && p.X > Piece.X),
                         new Vector2I(TargetPosition.X - 1, TargetPosition.Y)
                     );
                 }
             }
         }
 
-        public CastlingMove(ChessPiece chessPiece, Vector2I targetPosition)
-            : base(chessPiece, targetPosition)
+        public CastlingMove(Piece piece, Vector2I targetPosition)
+            : base(piece, targetPosition)
         {
         }
     }

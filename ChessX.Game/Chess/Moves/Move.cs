@@ -7,7 +7,7 @@ namespace ChessX.Game.Chess.Moves
 {
     public abstract class Move
     {
-        public ChessPiece ChessPiece { get; }
+        public Piece Piece { get; }
 
         public Vector2I OriginalPosition { get; }
 
@@ -15,10 +15,10 @@ namespace ChessX.Game.Chess.Moves
 
         public virtual bool CanCapture => false;
 
-        protected Move(ChessPiece chessPiece, Vector2I targetPosition)
+        protected Move(Piece piece, Vector2I targetPosition)
         {
-            ChessPiece = chessPiece;
-            OriginalPosition = chessPiece.Position;
+            Piece = piece;
+            OriginalPosition = piece.Position;
             TargetPosition = targetPosition;
         }
 
@@ -26,8 +26,8 @@ namespace ChessX.Game.Chess.Moves
         /// Expand this <see cref="Move"/> into <see cref="Instruction"/>s.
         /// <remarks>The returned enumerable must be completely enumerated before any of the instructions are executed.</remarks>
         /// </summary>
-        /// <param name="chessMatch">The state of the match before this move is made.</param>
+        /// <param name="match">The state of the match before this move is made.</param>
         /// <returns>A enumeration of <see cref="Instruction"/>s.</returns>
-        public abstract IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch);
+        public abstract IEnumerable<Instruction> GetInstructions(Match match);
     }
 }

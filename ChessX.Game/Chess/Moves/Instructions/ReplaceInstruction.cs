@@ -5,18 +5,18 @@ namespace ChessX.Game.Chess.Moves.Instructions
 {
     public class ReplaceInstruction : Instruction
     {
-        public ChessPiece NewChessPiece { get; }
+        public Piece NewPiece { get; }
 
-        public ReplaceInstruction(ChessPiece chessPiece, ChessPiece newChessPiece)
-            : base(chessPiece)
+        public ReplaceInstruction(Piece piece, Piece newPiece)
+            : base(piece)
         {
-            NewChessPiece = newChessPiece;
+            NewPiece = newPiece;
         }
 
-        public override void Execute(ChessMatch chessMatch)
+        public override void Execute(Match match)
         {
-            chessMatch.ChessPieces.Remove(ChessPiece);
-            chessMatch.ChessPieces.Add(NewChessPiece.WithPosition(ChessPiece.Position));
+            match.Pieces.Remove(Piece);
+            match.Pieces.Add(NewPiece.WithPosition(Piece.Position));
         }
     }
 }

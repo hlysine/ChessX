@@ -24,15 +24,15 @@ namespace ChessX.Game.Tests.Visual
             Player player1 = control1.Player;
             Player player2 = control2.Player;
             DrawableRuleset drawableRuleset;
-            var chessMatch = classicRuleset.CreateChessMatch();
+            var chessMatch = classicRuleset.CreateMatch();
             chessMatch.AddPlayer(player1, ChessColor.White);
             chessMatch.AddPlayer(player2, ChessColor.Black);
             chessMatch.Initialize();
             Add(drawableRuleset = classicRuleset.CreateDrawableRuleset(chessMatch));
-            drawableRuleset.DrawableChessMatch.Overlays.Add(control1);
-            drawableRuleset.DrawableChessMatch.Overlays.Add(control2);
+            drawableRuleset.DrawableMatch.Overlays.Add(control1);
+            drawableRuleset.DrawableMatch.Overlays.Add(control2);
 
-            Add(new StepSlider<float>("Chess board rotation", 0, 360, 0) { ValueChanged = val => drawableRuleset.DrawableChessMatch.Rotation = val });
+            Add(new StepSlider<float>("Chess board rotation", 0, 360, 0) { ValueChanged = val => drawableRuleset.DrawableMatch.Rotation = val });
 
             async void loop(CancellationToken token = default)
             {

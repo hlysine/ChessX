@@ -7,8 +7,8 @@ namespace ChessX.Game.Chess.Moves.Instructions
     {
         public Vector2I Position { get; }
 
-        protected PositionalInstruction(ChessPiece chessPiece, Vector2I position)
-            : base(chessPiece)
+        protected PositionalInstruction(Piece piece, Vector2I position)
+            : base(piece)
         {
             Position = position;
         }

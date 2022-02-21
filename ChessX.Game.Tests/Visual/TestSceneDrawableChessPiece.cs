@@ -23,7 +23,7 @@ namespace ChessX.Game.Tests.Visual
                 RelativeSizeAxes = Axes.Both
             });
 
-            var match = ruleset.Value.CreateChessMatch();
+            var match = ruleset.Value.CreateMatch();
             Add(new ChessGridContainer
             {
                 RelativeSizeAxes = Axes.Both,
@@ -36,8 +36,8 @@ namespace ChessX.Game.Tests.Visual
                     Padding = new MarginPadding(0.5f),
                     Children = Enum.GetValues(typeof(ChessPieceType)).Cast<ChessPieceType>().SelectMany(p => new[]
                     {
-                        new DrawableClassicPiece(match.CreateChessPiece(p, ChessColor.Black)),
-                        new DrawableClassicPiece(match.CreateChessPiece(p, ChessColor.White))
+                        new DrawableClassicPiece(match.CreatePiece(p, ChessColor.Black)),
+                        new DrawableClassicPiece(match.CreatePiece(p, ChessColor.White))
                     }).ToList()
                 }
             });

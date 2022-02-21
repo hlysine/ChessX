@@ -7,8 +7,8 @@ namespace ChessX.Game.Rulesets
     {
         public abstract string Name { get; }
 
-        public abstract ChessMatch CreateChessMatch();
+        public abstract Match CreateMatch();
 
-        public abstract DrawableRuleset CreateDrawableRuleset(ChessMatch match);
+        public abstract DrawableRuleset CreateDrawableRuleset(Match match);
     }
 }

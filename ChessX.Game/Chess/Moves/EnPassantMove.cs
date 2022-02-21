@@ -7,14 +7,14 @@ namespace ChessX.Game.Chess.Moves
 {
     public class EnPassantMove : Move
     {
-        public override IEnumerable<Instruction> GetInstructions(ChessMatch chessMatch)
+        public override IEnumerable<Instruction> GetInstructions(Match match)
         {
-            yield return new MoveInstruction(ChessPiece, TargetPosition);
-            yield return new RemoveInstruction(chessMatch.GetPieceAt(new Vector2I(TargetPosition.X, ChessPiece.Y)));
+            yield return new MoveInstruction(Piece, TargetPosition);
+            yield return new RemoveInstruction(match.GetPieceAt(new Vector2I(TargetPosition.X, Piece.Y)));
         }
 
-        public EnPassantMove(ChessPiece chessPiece, Vector2I targetPosition)
-            : base(chessPiece, targetPosition)
+        public EnPassantMove(Piece piece, Vector2I targetPosition)
+            : base(piece, targetPosition)
         {
         }
     }
