@@ -21,8 +21,6 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
         public IControllablePlayer<TPiece> Player { get; }
 
-        private readonly Container content;
-
         [Cached(typeof(IPopupContainer))]
         private readonly MoveHintContainer moveHintContainer;
 
@@ -42,9 +40,11 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
                     moveHintContainer.Hide();
                 else
                 {
-                    moveHintContainer.Show();
-                    updateMoveHints();
+                    if (Player.IsInTurn)
+                        moveHintContainer.Show();
                 }
+
+                updateMoveHints();
             }
         }
 
@@ -52,14 +52,10 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
         {
             RelativeSizeAxes = Axes.Both;
             Player = CreatePlayer();
-            Add(content = new Container
+            Add(moveHintContainer = new MoveHintContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = moveHintContainer = new MoveHintContainer
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Padding = new MarginPadding(0.5f)
-                }
+                Padding = new MarginPadding(0.5f)
             });
         }
 
@@ -74,7 +70,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             {
                 Schedule(() =>
                 {
-                    content.Show();
+                    moveHintContainer.Show();
                     SelectedPiece = null;
                 });
             };
@@ -83,7 +79,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             {
                 Schedule(() =>
                 {
-                    content.Hide();
+                    moveHintContainer.Hide();
                     SelectedPiece = null;
                 });
             };
@@ -135,9 +131,9 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
         private class MoveHintContainer : VisibilityContainer, IPopupContainer
         {
-            protected override void PopIn() => this.FadeIn(200, Easing.InOutQuint);
+            protected override void PopIn() => this.FadeIn();
 
-            protected override void PopOut() => this.FadeOut(200, Easing.InOutQuint);
+            protected override void PopOut() => this.FadeOut();
         }
     }
 }

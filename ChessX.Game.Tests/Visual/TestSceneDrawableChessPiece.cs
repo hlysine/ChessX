@@ -24,7 +24,7 @@ namespace ChessX.Game.Tests.Visual
             });
 
             var match = (ChessMatch)ruleset.Value.CreateMatch();
-            Add(new GridCoordinateContainer
+            Add(new BoardScalingContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 Origin = Anchor.Centre,

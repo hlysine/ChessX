@@ -49,11 +49,17 @@ namespace ChessX.Game.Rulesets.UI
                 RelativeSizeAxes = Axes.Both,
                 Children = new[]
                 {
-                    new GridCoordinateContainer
+                    new BoardScalingContainer
                     {
                         ChildrenEnumerable = new[]
                         {
-                            CreateGameBoard(),
+                            CreateGameBoard()
+                        }.Where(c => c != null)
+                    },
+                    new BoardScalingContainer
+                    {
+                        ChildrenEnumerable = new[]
+                        {
                             Underlays,
                             PieceContainer,
                             Overlays

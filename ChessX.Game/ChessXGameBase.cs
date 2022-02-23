@@ -1,4 +1,5 @@
 using System.Linq;
+using ChessX.Game.Graphics;
 using ChessX.Game.Rulesets;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -24,6 +25,9 @@ namespace ChessX.Game
         [Cached]
         [Cached(typeof(IBindable<Ruleset>))]
         protected readonly Bindable<Ruleset> Ruleset;
+
+        [Cached]
+        public readonly ChessXColor ChessXColor = new ChessXColor();
 
         protected ChessXGameBase()
         {

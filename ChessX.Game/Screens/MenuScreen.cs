@@ -1,11 +1,11 @@
+using ChessX.Game.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
 using osuTK;
-using osuTK.Graphics;
 
 namespace ChessX.Game.Screens
 {
@@ -16,9 +16,8 @@ namespace ChessX.Game.Screens
         {
             InternalChildren = new Drawable[]
             {
-                new Box
+                new ChessBoardVisualization(new Vector2I(8))
                 {
-                    Colour = Color4.Violet,
                     RelativeSizeAxes = Axes.Both,
                 },
                 new SpriteText

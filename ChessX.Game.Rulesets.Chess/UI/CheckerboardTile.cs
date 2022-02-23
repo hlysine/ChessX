@@ -1,7 +1,7 @@
+using ChessX.Game.Graphics;
 using ChessX.Game.Rulesets.UI;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
@@ -10,8 +10,11 @@ namespace ChessX.Game.Rulesets.Chess.UI
 {
     public class CheckerboardTile : Box
     {
-        [Resolved]
+        [Resolved(canBeNull: true)]
         private GridInputRedirector inputRedirector { get; set; }
+
+        [Resolved]
+        private ChessXColor chessXColor { get; set; }
 
         public TileVariant Variant { get; }
 
@@ -21,13 +24,18 @@ namespace ChessX.Game.Rulesets.Chess.UI
         {
             Variant = variant;
             GridPosition = position;
-            Colour = getVariantColour();
             RelativeSizeAxes = Axes.Both;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            Colour = getVariantColour();
         }
 
         protected override bool OnHover(HoverEvent e)
         {
-            this.FadeColour(Colour4.Gray, 100, Easing.InOutQuint);
+            this.FadeColour(getVariantColour().Darken(0.3f), 100, Easing.InOutQuint);
             return false;
         }
 
@@ -38,12 +46,12 @@ namespace ChessX.Game.Rulesets.Chess.UI
 
         protected override bool OnClick(ClickEvent e)
         {
-            return inputRedirector.SendEvent(GridPosition, e);
+            return inputRedirector?.SendEvent(GridPosition, e) ?? base.OnClick(e);
         }
 
-        private ColourInfo getVariantColour()
+        private Colour4 getVariantColour()
         {
-            return Variant == TileVariant.Dark ? Colour4.DarkGray : Colour4.LightGray;
+            return Variant == TileVariant.Dark ? chessXColor.ChessBoardDark : chessXColor.ChessBoardLight;
         }
 
         public enum TileVariant
