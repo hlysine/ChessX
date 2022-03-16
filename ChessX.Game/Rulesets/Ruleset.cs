@@ -10,9 +10,9 @@ namespace ChessX.Game.Rulesets
 
         public abstract string Name { get; }
 
-        public abstract Match CreateMatch();
+        public abstract IMatch CreateMatch();
 
-        public abstract DrawableRuleset CreateDrawableRuleset(Match match);
+        public abstract DrawableRuleset CreateDrawableRuleset(IMatch match);
 
         protected Ruleset()
         {

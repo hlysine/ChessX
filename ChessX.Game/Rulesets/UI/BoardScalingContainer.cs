@@ -38,8 +38,8 @@ namespace ChessX.Game.Rulesets.UI
         [BackgroundDependencyLoader(true)]
         private void load(IHasBoardSize board)
         {
-            BoardWidth = board?.BoardWidth ?? Match.DEFAULT_BOARD_SIZE.X;
-            BoardHeight = board?.BoardHeight ?? Match.DEFAULT_BOARD_SIZE.Y;
+            BoardWidth = board?.BoardWidth ?? IMatch.DEFAULT_BOARD_SIZE.X;
+            BoardHeight = board?.BoardHeight ?? IMatch.DEFAULT_BOARD_SIZE.Y;
             FillMode = FillMode.Fit;
             FillAspectRatio = (float)BoardWidth / BoardHeight;
         }

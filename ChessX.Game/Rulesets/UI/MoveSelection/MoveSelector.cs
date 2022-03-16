@@ -17,7 +17,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
         private PieceContainer pieceContainer { get; set; }
 
         [Resolved]
-        private Match match { get; set; }
+        private IMatch match { get; set; }
 
         public IControllablePlayer<TPiece> Player { get; }
 

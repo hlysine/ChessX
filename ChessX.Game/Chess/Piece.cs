@@ -27,17 +27,7 @@ namespace ChessX.Game.Chess
             set => Position = new Vector2I(Position.X, value);
         }
 
-        public abstract IEnumerable<Move> GetAllowedMoves(Match match, bool noRecursion = false);
-    }
-
-    public abstract class Piece<TPiece> : Piece where TPiece : Piece<TPiece>
-    {
-        public override IEnumerable<Move> GetAllowedMoves(Match match, bool noRecursion = false)
-        {
-            return GetAllowedMoves((Match<TPiece>)match, noRecursion);
-        }
-
-        public abstract IEnumerable<Move<TPiece>> GetAllowedMoves(Match<TPiece> match, bool noRecursion = false);
+        public abstract IEnumerable<Move> GetAllowedMoves(IMatch match, bool noRecursion = false);
     }
 
     public static class PieceExtensions

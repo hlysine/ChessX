@@ -22,7 +22,7 @@ namespace ChessX.Game.Rulesets.UI
 
     public abstract class DrawableMatch<TPiece> : DrawableMatch, IRotatable where TPiece : Piece
     {
-        [Cached(typeof(Match))]
+        [Cached(typeof(IMatch))]
         [Cached(typeof(IHasBoardSize))]
         public Match<TPiece> Match { get; }
 

@@ -9,27 +9,34 @@ using osu.Framework.Graphics.Primitives;
 
 namespace ChessX.Game.Chess
 {
-    public abstract class Match : IHasBoardSize
+    public interface IMatch : IHasBoardSize
     {
-        public static readonly Vector2I DEFAULT_BOARD_SIZE = new Vector2I(8);
+        public static readonly Vector2I DEFAULT_BOARD_SIZE = new(8);
 
-        public virtual Vector2I BoardSize => DEFAULT_BOARD_SIZE;
+        Vector2I IHasBoardSize.BoardSize => DEFAULT_BOARD_SIZE;
+
+        public IReadOnlyList<Piece> Pieces { get; }
+
+        public IReadOnlyList<Move> MoveHistory { get; }
+
+        public IReadOnlyList<IPlayer> Players { get; }
     }
 
-    public abstract class Match<TPiece> : Match
+    public abstract class Match<TPiece> : IMatch
         where TPiece : Piece
     {
-        public BindableList<TPiece> Pieces { get; } = new BindableList<TPiece>();
+        public virtual Vector2I BoardSize => IMatch.DEFAULT_BOARD_SIZE;
 
-        public BindableList<Move<TPiece>> MoveHistory { get; } = new BindableList<Move<TPiece>>();
+        public BindableList<TPiece> Pieces { get; } = new();
 
-        private readonly List<Player<TPiece>> players = new List<Player<TPiece>>();
+        public BindableList<Move<TPiece>> MoveHistory { get; } = new();
 
+        private readonly List<Player<TPiece>> players = new();
         public IReadOnlyList<Player<TPiece>> Players => players;
 
-        protected Match()
-        {
-        }
+        IReadOnlyList<Piece> IMatch.Pieces => Pieces;
+        IReadOnlyList<Move> IMatch.MoveHistory => MoveHistory;
+        IReadOnlyList<IPlayer> IMatch.Players => players;
 
         public void AddPlayer(Player<TPiece> player)
         {

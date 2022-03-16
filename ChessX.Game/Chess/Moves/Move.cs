@@ -6,14 +6,17 @@ namespace ChessX.Game.Chess.Moves
 {
     public abstract class Move
     {
+        public Piece Piece { get; }
+
         public Vector2I OriginalPosition { get; }
 
         public Vector2I TargetPosition { get; }
 
         public virtual bool CanCapture => false;
 
-        protected Move(Vector2I originalPosition, Vector2I targetPosition)
+        protected Move(Piece piece, Vector2I originalPosition, Vector2I targetPosition)
         {
+            Piece = piece;
             OriginalPosition = originalPosition;
             TargetPosition = targetPosition;
         }
@@ -21,10 +24,10 @@ namespace ChessX.Game.Chess.Moves
 
     public abstract class Move<TPiece> : Move where TPiece : Piece
     {
-        public TPiece Piece { get; }
+        public new TPiece Piece { get; }
 
         protected Move(TPiece piece, Vector2I targetPosition)
-            : base(piece.Position, targetPosition)
+            : base(piece, piece.Position, targetPosition)
         {
             Piece = piece;
         }

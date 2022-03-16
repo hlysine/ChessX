@@ -17,8 +17,8 @@ namespace ChessX.Game.Rulesets.Chess.UI
         [BackgroundDependencyLoader(true)]
         private void load(IHasBoardSize board)
         {
-            BoardWidth = board?.BoardWidth ?? Match.DEFAULT_BOARD_SIZE.X;
-            BoardHeight = board?.BoardHeight ?? Match.DEFAULT_BOARD_SIZE.Y;
+            BoardWidth = board?.BoardWidth ?? IMatch.DEFAULT_BOARD_SIZE.X;
+            BoardHeight = board?.BoardHeight ?? IMatch.DEFAULT_BOARD_SIZE.Y;
 
             var tiles = new Drawable[BoardHeight][];
 

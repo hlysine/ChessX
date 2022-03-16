@@ -1,15 +1,18 @@
+#nullable enable
+
 using System;
 using System.Threading.Tasks;
 using ChessX.Game.Chess;
 using ChessX.Game.Chess.Moves;
-using JetBrains.Annotations;
 using osu.Framework.Bindables;
 
 namespace ChessX.Game.Players
 {
-    public abstract class Player : IPlayer
+    public abstract class Player<TPiece> : IPlayer<TPiece> where TPiece : Piece
     {
-        public readonly BindableBool IsInTurnBindable = new BindableBool();
+        public Match<TPiece>? Match { get; set; }
+
+        public readonly BindableBool IsInTurnBindable = new();
 
         public bool IsInTurn
         {
@@ -17,51 +20,39 @@ namespace ChessX.Game.Players
             set => IsInTurnBindable.Value = value;
         }
 
-        public abstract bool RotateBoardInTurn { get; }
+        public readonly Bindable<Move<TPiece>?> SelectedMoveBindable = new();
+        private readonly LeasedBindable<Move<TPiece>?> selectedMoveBindable;
 
-        public abstract float TargetBoardRotation { get; }
+        public Move<TPiece>? SelectedMove => SelectedMoveBindable.Value;
 
-        public abstract void StartTurn();
-
-        public abstract void EndTurn();
-
-        public abstract Task WaitForTurnEnd();
-    }
-
-    public abstract class Player<TPiece> : Player, IPlayer<TPiece> where TPiece : Piece
-    {
-        public Match<TPiece> Match { get; set; }
-
-        public readonly Bindable<Move<TPiece>> SelectedMoveBindable = new Bindable<Move<TPiece>>();
-        private readonly LeasedBindable<Move<TPiece>> selectedMoveBindable;
-
-        public Move<TPiece> SelectedMove => SelectedMoveBindable.Value;
-
-        [CanBeNull]
-        private Move<TPiece> selectedMove
+        private Move<TPiece>? selectedMove
         {
             get => selectedMoveBindable.Value;
             set => selectedMoveBindable.Value = value;
         }
 
-        public event IPlayer<TPiece>.TurnStartHandler TurnStarted;
+        public abstract bool RotateBoardInTurn { get; }
 
-        public event Action TurnEnded;
+        public abstract float TargetBoardRotation { get; }
 
-        private TaskCompletionSource<Move<TPiece>> turnCompletion;
+        public event IPlayer<TPiece>.TurnStartHandler? TurnStarted;
+
+        public event Action? TurnEnded;
+
+        private TaskCompletionSource<Move<TPiece>?>? turnCompletion;
 
         protected Player()
         {
             selectedMoveBindable = SelectedMoveBindable.BeginLease(false);
         }
 
-        public override void StartTurn()
+        public void StartTurn()
         {
             if (IsInTurn) return;
 
             selectedMove = null;
             IsInTurn = true;
-            var localCompletionSource = turnCompletion = new TaskCompletionSource<Move<TPiece>>();
+            var localCompletionSource = turnCompletion = new TaskCompletionSource<Move<TPiece>?>();
 
             void selectMove(Move<TPiece> move)
             {
@@ -73,7 +64,7 @@ namespace ChessX.Game.Players
             TurnStarted?.Invoke(selectMove);
         }
 
-        public override void EndTurn()
+        public void EndTurn()
         {
             if (!IsInTurn) return;
 
@@ -84,8 +75,11 @@ namespace ChessX.Game.Players
             TurnEnded?.Invoke();
         }
 
-        public override Task WaitForTurnEnd()
+        public Task WaitForTurnEnd()
         {
+            if (turnCompletion == null)
+                throw new InvalidOperationException("Cannot wait for turn end when this player is not in turn.");
+
             return turnCompletion.Task;
         }
 

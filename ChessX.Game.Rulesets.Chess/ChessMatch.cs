@@ -14,7 +14,7 @@ namespace ChessX.Game.Rulesets.Chess
 {
     public class ChessMatch : Match<ChessPiece>
     {
-        public new IEnumerable<ChessPlayer> Players => base.Players.Cast<ChessPlayer>();
+        public new IReadOnlyList<ChessPlayer> Players => base.Players.Cast<ChessPlayer>().ToList();
 
         public override void Initialize()
         {
