@@ -3,6 +3,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <GenerateProgramFile>false</GenerateProgramFile>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\ChessX.Game.Rulesets.Chess\ChessX.Game.Rulesets.Chess.csproj" />
