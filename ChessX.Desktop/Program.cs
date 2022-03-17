@@ -8,9 +8,9 @@ namespace ChessX.Desktop
     {
         public static void Main()
         {
-            using (GameHost host = Host.GetSuitableHost(@"ChessX"))
-            using (osu.Framework.Game game = new ChessXGame())
-                host.Run(game);
+            using GameHost host = Host.GetSuitableDesktopHost(@"ChessX");
+            using osu.Framework.Game game = new ChessXGame();
+            host.Run(game);
         }
     }
 }

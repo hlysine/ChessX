@@ -7,9 +7,9 @@ namespace ChessX.Game.Tests
     {
         public static void Main()
         {
-            using (GameHost host = Host.GetSuitableHost("visual-tests"))
-            using (var game = new ChessXTestBrowser())
-                host.Run(game);
+            using GameHost host = Host.GetSuitableDesktopHost("visual-tests");
+            using var game = new ChessXTestBrowser();
+            host.Run(game);
         }
     }
 }
