@@ -13,8 +13,6 @@ namespace ChessX.Game.Chess
     {
         public static readonly Vector2I DEFAULT_BOARD_SIZE = new(8);
 
-        Vector2I IHasBoardSize.BoardSize => DEFAULT_BOARD_SIZE;
-
         public IReadOnlyList<Piece> Pieces { get; }
 
         public IReadOnlyList<Move> MoveHistory { get; }
@@ -33,10 +31,6 @@ namespace ChessX.Game.Chess
 
         private readonly List<Player<TPiece>> players = new();
         public IReadOnlyList<Player<TPiece>> Players => players;
-
-        IReadOnlyList<Piece> IMatch.Pieces => Pieces;
-        IReadOnlyList<Move> IMatch.MoveHistory => MoveHistory;
-        IReadOnlyList<IPlayer> IMatch.Players => players;
 
         public void AddPlayer(Player<TPiece> player)
         {
@@ -62,5 +56,13 @@ namespace ChessX.Game.Chess
         public bool IsInBounds(int x, int y) => x >= 0 && y >= 0 && x < BoardSize.X && y < BoardSize.Y;
 
         public bool IsInBounds(Vector2I position) => IsInBounds(position.X, position.Y);
+
+        #region IMatch
+
+        IReadOnlyList<Piece> IMatch.Pieces => Pieces;
+        IReadOnlyList<Move> IMatch.MoveHistory => MoveHistory;
+        IReadOnlyList<IPlayer> IMatch.Players => players;
+
+        #endregion
     }
 }
