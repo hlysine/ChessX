@@ -12,14 +12,14 @@ namespace ChessX.Game.Rulesets
     {
         private const string ruleset_library_prefix = @"ChessX.Game.Rulesets";
 
-        private readonly Dictionary<Assembly, Type> loadedAssemblies = new Dictionary<Assembly, Type>();
+        private readonly Dictionary<Assembly, Type> loadedAssemblies = new();
 
         /// <summary>
         /// All available rulesets.
         /// </summary>
         public IEnumerable<RulesetInfo> Rulesets => rulesets;
 
-        private readonly List<RulesetInfo> rulesets = new List<RulesetInfo>();
+        private readonly List<RulesetInfo> rulesets = new();
 
         public RulesetStore()
         {

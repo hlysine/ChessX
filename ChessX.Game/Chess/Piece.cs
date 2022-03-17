@@ -7,7 +7,7 @@ namespace ChessX.Game.Chess
 {
     public abstract class Piece
     {
-        public readonly Bindable<Vector2I> PositionBindable = new Bindable<Vector2I>();
+        public readonly Bindable<Vector2I> PositionBindable = new();
 
         public Vector2I Position
         {

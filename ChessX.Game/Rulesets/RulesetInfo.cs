@@ -37,7 +37,7 @@ namespace ChessX.Game.Rulesets
 
         public override string ToString() => Name;
 
-        public RulesetInfo Clone() => new RulesetInfo(Name, InstantiationInfo);
+        public RulesetInfo Clone() => new(Name, InstantiationInfo);
 
         public Ruleset CreateInstance()
         {

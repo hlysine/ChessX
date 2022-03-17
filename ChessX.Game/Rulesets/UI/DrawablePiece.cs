@@ -25,7 +25,7 @@ namespace ChessX.Game.Rulesets.UI
     {
         public TPiece Piece { get; }
 
-        private readonly Bindable<Vector2I> positionBindable = new Bindable<Vector2I>();
+        private readonly Bindable<Vector2I> positionBindable = new();
 
         public override Vector2I GridPosition => Piece.Position;
 

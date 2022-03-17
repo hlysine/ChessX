@@ -10,7 +10,7 @@ namespace ChessX.Game.Rulesets.Chess.UI
         [Resolved]
         private TextureStore textures { get; set; }
 
-        public readonly Bindable<ChessPieceType> PieceTypeBindable = new Bindable<ChessPieceType>();
+        public readonly Bindable<ChessPieceType> PieceTypeBindable = new();
 
         public ChessPieceType PieceType
         {
@@ -18,7 +18,7 @@ namespace ChessX.Game.Rulesets.Chess.UI
             set => PieceTypeBindable.Value = value;
         }
 
-        public readonly Bindable<ChessColor> ColorBindable = new Bindable<ChessColor>();
+        public readonly Bindable<ChessColor> ColorBindable = new();
 
         public ChessColor Color
         {

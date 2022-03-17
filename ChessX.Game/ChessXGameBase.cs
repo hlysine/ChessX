@@ -27,7 +27,7 @@ namespace ChessX.Game
         protected readonly Bindable<Ruleset> Ruleset;
 
         [Cached]
-        public readonly ChessXColor ChessXColor = new ChessXColor();
+        public readonly ChessXColor ChessXColor = new();
 
         protected ChessXGameBase()
         {

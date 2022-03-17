@@ -13,7 +13,7 @@ namespace ChessX.Game.Tests.Visual
 {
     public class TestSceneDrawableRuleset : ChessXTestScene
     {
-        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource cancellationTokenSource = new();
 
         [BackgroundDependencyLoader]
         private void load(Bindable<Ruleset> ruleset)

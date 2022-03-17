@@ -8,14 +8,14 @@ namespace ChessX.Game.Rulesets.Chess.Pieces
     {
         private static readonly Vector2I[] possible_offsets =
         {
-            new Vector2I(2, 1),
-            new Vector2I(2, -1),
-            new Vector2I(-2, 1),
-            new Vector2I(-2, -1),
-            new Vector2I(1, 2),
-            new Vector2I(-1, 2),
-            new Vector2I(1, -2),
-            new Vector2I(-1, -2)
+            new(2, 1),
+            new(2, -1),
+            new(-2, 1),
+            new(-2, -1),
+            new(1, 2),
+            new(-1, 2),
+            new(1, -2),
+            new(-1, -2)
         };
 
         public KnightPiece(ChessColor color)

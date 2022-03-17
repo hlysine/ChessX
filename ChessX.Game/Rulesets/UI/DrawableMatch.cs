@@ -16,8 +16,8 @@ namespace ChessX.Game.Rulesets.UI
     [Cached(typeof(IRotatable))]
     public abstract class DrawableMatch : Container
     {
-        public Container Underlays { get; } = new Container { RelativeSizeAxes = Axes.Both };
-        public Container Overlays { get; } = new Container { RelativeSizeAxes = Axes.Both };
+        public Container Underlays { get; } = new() { RelativeSizeAxes = Axes.Both };
+        public Container Overlays { get; } = new() { RelativeSizeAxes = Axes.Both };
     }
 
     public abstract class DrawableMatch<TPiece> : DrawableMatch, IRotatable where TPiece : Piece
@@ -27,9 +27,9 @@ namespace ChessX.Game.Rulesets.UI
         public Match<TPiece> Match { get; }
 
         [Cached]
-        public PieceContainer PieceContainer { get; } = new PieceContainer();
+        public PieceContainer PieceContainer { get; } = new();
 
-        private readonly BindableList<TPiece> pieces = new BindableList<TPiece>();
+        private readonly BindableList<TPiece> pieces = new();
 
         protected DrawableMatch(Match<TPiece> match)
         {
