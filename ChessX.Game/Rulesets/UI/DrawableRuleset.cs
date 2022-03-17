@@ -7,26 +7,33 @@ namespace ChessX.Game.Rulesets.UI
 {
     public abstract class DrawableRuleset : CompositeDrawable
     {
+        public IMatch Match { get; }
+
+        protected DrawableRuleset(IMatch match)
+        {
+            Match = match;
+            RelativeSizeAxes = Axes.Both;
+        }
     }
 
     public abstract class DrawableRuleset<TPiece> : DrawableRuleset where TPiece : Piece
     {
-        public Match<TPiece> Match { get; }
+        public new Match<TPiece> Match { get; }
 
         public DrawableMatch<TPiece> DrawableMatch { get; private set; }
 
-        public abstract DrawableMatch<TPiece> CreateDrawableMatch();
-
         protected DrawableRuleset(Match<TPiece> match)
+            : base(match)
         {
             Match = match;
-            RelativeSizeAxes = Axes.Both;
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            AddInternal(DrawableMatch = CreateDrawableMatch());
+            AddInternal(DrawableMatch = CreateDrawableMatch(Match));
         }
+
+        protected abstract DrawableMatch<TPiece> CreateDrawableMatch(Match<TPiece> match);
     }
 }

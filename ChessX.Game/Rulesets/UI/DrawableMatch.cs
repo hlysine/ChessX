@@ -14,24 +14,19 @@ using osuTK;
 namespace ChessX.Game.Rulesets.UI
 {
     [Cached(typeof(IRotatable))]
-    public abstract class DrawableMatch : Container
-    {
-        public Container Underlays { get; } = new() { RelativeSizeAxes = Axes.Both };
-        public Container Overlays { get; } = new() { RelativeSizeAxes = Axes.Both };
-    }
-
-    public abstract class DrawableMatch<TPiece> : DrawableMatch, IRotatable where TPiece : Piece
+    public abstract class DrawableMatch : Container, IRotatable
     {
         [Cached(typeof(IMatch))]
         [Cached(typeof(IHasBoardSize))]
-        public Match<TPiece> Match { get; }
+        public IMatch Match { get; }
 
         [Cached]
         public PieceContainer PieceContainer { get; } = new();
 
-        private readonly BindableList<TPiece> pieces = new();
+        public Container Underlays { get; } = new() { RelativeSizeAxes = Axes.Both };
+        public Container Overlays { get; } = new() { RelativeSizeAxes = Axes.Both };
 
-        protected DrawableMatch(Match<TPiece> match)
+        protected DrawableMatch(IMatch match)
         {
             Match = match;
 
@@ -67,7 +62,32 @@ namespace ChessX.Game.Rulesets.UI
                     }
                 }
             });
+        }
 
+        /// <summary>
+        /// The bottom-most drawable displayed in the drawable match, usually a game board.
+        /// <remarks>This game board can be interactive by reporting inputs to a <see cref="GridInputRedirector"/> retrieved via DI.</remarks>
+        /// </summary>
+        /// <returns>The game board, or null if this isn't required.</returns>
+        [CanBeNull]
+        protected abstract Drawable CreateGameBoard();
+    }
+
+    public abstract class DrawableMatch<TPiece> : DrawableMatch where TPiece : Piece
+    {
+        public new Match<TPiece> Match { get; }
+
+        private readonly BindableList<TPiece> pieces = new();
+
+        protected DrawableMatch(Match<TPiece> match)
+            : base(match)
+        {
+            Match = match;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
             pieces.BindTo(Match.Pieces);
             pieces.BindCollectionChanged((sender, e) => Schedule(() => OnChessPiecesChanged(sender, e)), true);
             FinishTransforms(true);
@@ -124,14 +144,6 @@ namespace ChessX.Game.Rulesets.UI
                 }
             }
         }
-
-        /// <summary>
-        /// The bottom-most drawable displayed in the drawable match, usually a game board.
-        /// <remarks>This game board can be interactive by reporting inputs to a <see cref="GridInputRedirector"/> retrieved via DI.</remarks>
-        /// </summary>
-        /// <returns>The game board, or null if this isn't required.</returns>
-        [CanBeNull]
-        protected abstract Drawable CreateGameBoard();
 
         protected abstract DrawablePiece<TPiece> CreateDrawableRepresentation(TPiece piece);
     }

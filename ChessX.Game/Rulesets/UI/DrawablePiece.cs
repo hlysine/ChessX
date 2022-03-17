@@ -14,22 +14,13 @@ namespace ChessX.Game.Rulesets.UI
         [Resolved(canBeNull: true)]
         private PieceContainer pieceContainer { get; set; }
 
-        protected override bool OnClick(ClickEvent e)
-        {
-            pieceContainer?.TriggerPieceClick(this, e);
-            return true;
-        }
-    }
-
-    public abstract class DrawablePiece<TPiece> : DrawablePiece where TPiece : Piece
-    {
-        public TPiece Piece { get; }
+        public Piece Piece { get; }
 
         private readonly Bindable<Vector2I> positionBindable = new();
 
         public override Vector2I GridPosition => Piece.Position;
 
-        protected DrawablePiece(TPiece piece)
+        protected DrawablePiece(Piece piece)
         {
             Piece = piece;
         }
@@ -45,6 +36,23 @@ namespace ChessX.Game.Rulesets.UI
         protected virtual void OnPositionChanged(ValueChangedEvent<Vector2I> e)
         {
             this.MoveTo(e.NewValue, 200, Easing.InOutQuint);
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            pieceContainer?.TriggerPieceClick(this, e);
+            return true;
+        }
+    }
+
+    public abstract class DrawablePiece<TPiece> : DrawablePiece where TPiece : Piece
+    {
+        public new TPiece Piece { get; }
+
+        protected DrawablePiece(TPiece piece)
+            : base(piece)
+        {
+            Piece = piece;
         }
     }
 }

@@ -1,3 +1,4 @@
+using ChessX.Game.Chess;
 using ChessX.Game.Rulesets.Chess.Pieces;
 using ChessX.Game.Rulesets.UI;
 
@@ -10,6 +11,6 @@ namespace ChessX.Game.Rulesets.Chess.UI
         {
         }
 
-        public override DrawableMatch<ChessPiece> CreateDrawableMatch() => new DrawableChessMatch((ChessMatch)Match);
+        protected override DrawableMatch<ChessPiece> CreateDrawableMatch(Match<ChessPiece> match) => new DrawableChessMatch((ChessMatch)match);
     }
 }
