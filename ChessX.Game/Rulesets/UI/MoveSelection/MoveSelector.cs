@@ -134,6 +134,11 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
             protected override void PopIn() => this.FadeIn();
 
             protected override void PopOut() => this.FadeOut();
+
+            public bool Remove(Drawable drawable)
+            {
+                return base.Remove(drawable, true);
+            }
         }
     }
 }

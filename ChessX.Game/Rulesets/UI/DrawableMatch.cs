@@ -120,7 +120,7 @@ namespace ChessX.Game.Rulesets.UI
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
-                    PieceContainer.RemoveAll(p => p is DrawablePiece);
+                    PieceContainer.RemoveAll(p => p is DrawablePiece, true);
                     PieceContainer.AddRange(pieces.Select(CreateDrawableRepresentation));
                     break;
             }
