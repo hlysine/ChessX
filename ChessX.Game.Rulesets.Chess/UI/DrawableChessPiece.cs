@@ -5,7 +5,7 @@ using osu.Framework.Graphics;
 
 namespace ChessX.Game.Rulesets.Chess.UI
 {
-    public class DrawableChessPiece : DrawablePiece<ChessPiece>
+    public partial class DrawableChessPiece : DrawablePiece<ChessPiece>
     {
         public DrawableChessPiece(ChessPiece piece)
             : base(piece)

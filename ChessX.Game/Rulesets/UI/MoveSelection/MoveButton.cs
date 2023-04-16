@@ -8,7 +8,7 @@ using osuTK;
 
 namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public class MoveButton<TMove> : GridCoordinateDrawable where TMove : Move
+    public partial class MoveButton<TMove> : GridCoordinateDrawable where TMove : Move
     {
         public virtual TMove Move { get; }
 

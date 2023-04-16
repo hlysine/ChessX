@@ -8,7 +8,7 @@ using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Rulesets.UI
 {
-    public abstract class DrawablePiece : GridCoordinateDrawable
+    public abstract partial class DrawablePiece : GridCoordinateDrawable
     {
         [CanBeNull]
         [Resolved(canBeNull: true)]
@@ -45,7 +45,7 @@ namespace ChessX.Game.Rulesets.UI
         }
     }
 
-    public abstract class DrawablePiece<TPiece> : DrawablePiece where TPiece : Piece
+    public abstract partial class DrawablePiece<TPiece> : DrawablePiece where TPiece : Piece
     {
         public new TPiece Piece { get; }
 

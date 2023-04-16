@@ -11,7 +11,7 @@ using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public abstract class MoveSelector<TPiece> : Container where TPiece : Piece
+    public abstract partial class MoveSelector<TPiece> : Container where TPiece : Piece
     {
         [Resolved]
         private PieceContainer pieceContainer { get; set; }
@@ -129,7 +129,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
         protected abstract MoveSelectionPopup<Move<TPiece>> CreateMoveSelectionPopup(IEnumerable<Move<TPiece>> moves);
 
-        private class MoveHintContainer : VisibilityContainer, IPopupContainer
+        private partial class MoveHintContainer : VisibilityContainer, IPopupContainer
         {
             protected override void PopIn() => this.FadeIn();
 

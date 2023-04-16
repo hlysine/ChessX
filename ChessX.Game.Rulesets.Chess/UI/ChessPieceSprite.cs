@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Textures;
 
 namespace ChessX.Game.Rulesets.Chess.UI
 {
-    public class ChessPieceSprite : Sprite
+    public partial class ChessPieceSprite : Sprite
     {
         [Resolved]
         private TextureStore textures { get; set; }

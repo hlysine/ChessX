@@ -14,7 +14,7 @@ using osuTK;
 namespace ChessX.Game.Rulesets.UI
 {
     [Cached(typeof(IRotatable))]
-    public abstract class DrawableMatch : Container, IRotatable
+    public abstract partial class DrawableMatch : Container, IRotatable
     {
         [Cached(typeof(IMatch))]
         [Cached(typeof(IHasBoardSize))]
@@ -73,7 +73,7 @@ namespace ChessX.Game.Rulesets.UI
         protected abstract Drawable CreateGameBoard();
     }
 
-    public abstract class DrawableMatch<TPiece> : DrawableMatch where TPiece : Piece
+    public abstract partial class DrawableMatch<TPiece> : DrawableMatch where TPiece : Piece
     {
         public new Match<TPiece> Match { get; }
 

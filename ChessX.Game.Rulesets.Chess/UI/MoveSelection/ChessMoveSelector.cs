@@ -9,7 +9,7 @@ using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Rulesets.Chess.UI.MoveSelection
 {
-    public class ChessMoveSelector : MoveSelector<ChessPiece>
+    public partial class ChessMoveSelector : MoveSelector<ChessPiece>
     {
         public new HumanPlayer Player => (HumanPlayer)base.Player;
 

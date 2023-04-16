@@ -6,7 +6,7 @@ using osu.Framework.Input.Events;
 namespace ChessX.Game.Rulesets.UI
 {
     [Cached]
-    public class PieceContainer : Container
+    public partial class PieceContainer : Container
     {
         public PieceContainer()
         {

@@ -3,7 +3,7 @@ using osu.Framework.Platform;
 
 namespace ChessX.Game.Tests.Visual
 {
-    public class TestSceneChessXGame : ChessXTestScene
+    public partial class TestSceneChessXGame : ChessXTestScene
     {
         private ChessXGame game;
 

@@ -8,7 +8,7 @@ using osu.Framework.Input.Events;
 
 namespace ChessX.Game.Rulesets.Chess.UI
 {
-    public class CheckerboardTile : Box
+    public partial class CheckerboardTile : Box
     {
         [Resolved(canBeNull: true)]
         private GridInputRedirector inputRedirector { get; set; }

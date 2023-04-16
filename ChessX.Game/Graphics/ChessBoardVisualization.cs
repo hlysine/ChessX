@@ -12,7 +12,7 @@ using osu.Framework.Utils;
 namespace ChessX.Game.Graphics
 {
     [Cached(typeof(IHasBoardSize))]
-    public class ChessBoardVisualization : CompositeDrawable, IHasBoardSize
+    public partial class ChessBoardVisualization : CompositeDrawable, IHasBoardSize
     {
         public Vector2I BoardSize { get; }
 
@@ -41,7 +41,7 @@ namespace ChessX.Game.Graphics
             }.WithEffect(new BlurEffect(), c => c.RelativeSizeAxes = Axes.Both);
         }
 
-        private class AnimatingCheckerboard : CompositeDrawable
+        private partial class AnimatingCheckerboard : CompositeDrawable
         {
             public int BoardWidth { get; private set; }
 
@@ -92,7 +92,7 @@ namespace ChessX.Game.Graphics
             }
         }
 
-        private class AnimatingCheckerboardTile : Box
+        private partial class AnimatingCheckerboardTile : Box
         {
             private Colour4 color1;
 

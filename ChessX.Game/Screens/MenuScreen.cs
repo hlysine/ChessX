@@ -9,7 +9,7 @@ using osuTK;
 
 namespace ChessX.Game.Screens
 {
-    public class MenuScreen : Screen
+    public partial class MenuScreen : Screen
     {
         [BackgroundDependencyLoader]
         private void load()

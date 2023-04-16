@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 
 namespace ChessX.Game.Rulesets.Chess.UI.MoveSelection
 {
-    public class ChessMoveSelectionPopup : MoveSelectionPopup<Move<ChessPiece>>
+    public partial class ChessMoveSelectionPopup : MoveSelectionPopup<Move<ChessPiece>>
     {
         public ChessMoveSelectionPopup(IEnumerable<Move<ChessPiece>> moves)
             : base(moves)
@@ -37,7 +37,7 @@ namespace ChessX.Game.Rulesets.Chess.UI.MoveSelection
             }
         }
 
-        protected class ChessPieceButton : PieceButton
+        protected partial class ChessPieceButton : PieceButton
         {
             public ChessPieceType PieceType { get; }
 

@@ -12,7 +12,7 @@ using osu.Framework.Graphics.Shapes;
 
 namespace ChessX.Game.Tests.Visual
 {
-    public class TestSceneDrawableChessPiece : ChessXTestScene
+    public partial class TestSceneDrawableChessPiece : ChessXTestScene
     {
         [BackgroundDependencyLoader]
         private void load(Bindable<Ruleset> ruleset)

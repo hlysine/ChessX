@@ -2,11 +2,11 @@ using osu.Framework.Testing;
 
 namespace ChessX.Game.Tests.Visual
 {
-    public class ChessXTestScene : TestScene
+    public partial class ChessXTestScene : TestScene
     {
         protected override ITestSceneTestRunner CreateRunner() => new ChessXTestSceneTestRunner();
 
-        private class ChessXTestSceneTestRunner : ChessXGameBase, ITestSceneTestRunner
+        private partial class ChessXTestSceneTestRunner : ChessXGameBase, ITestSceneTestRunner
         {
             private TestSceneTestRunner.TestRunner runner;
 

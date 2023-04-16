@@ -4,7 +4,7 @@ using osu.Framework.Graphics;
 
 namespace ChessX.Game.Tests.Visual
 {
-    public class TestSceneCheckerboard : ChessXTestScene
+    public partial class TestSceneCheckerboard : ChessXTestScene
     {
         [BackgroundDependencyLoader]
         private void load()

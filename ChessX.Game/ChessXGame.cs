@@ -5,7 +5,7 @@ using osu.Framework.Screens;
 
 namespace ChessX.Game
 {
-    public class ChessXGame : ChessXGameBase
+    public partial class ChessXGame : ChessXGameBase
     {
         private ScreenStack screenStack;
 

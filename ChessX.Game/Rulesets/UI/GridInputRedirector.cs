@@ -8,7 +8,7 @@ using osu.Framework.Input.Events;
 namespace ChessX.Game.Rulesets.UI
 {
     [Cached]
-    public class GridInputRedirector : Container
+    public partial class GridInputRedirector : Container
     {
         public bool SendEvent(Vector2I position, UIEvent e)
         {

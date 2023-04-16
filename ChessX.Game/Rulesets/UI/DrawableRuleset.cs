@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Containers;
 
 namespace ChessX.Game.Rulesets.UI
 {
-    public abstract class DrawableRuleset : CompositeDrawable
+    public abstract partial class DrawableRuleset : CompositeDrawable
     {
         public IMatch Match { get; }
 
@@ -16,7 +16,7 @@ namespace ChessX.Game.Rulesets.UI
         }
     }
 
-    public abstract class DrawableRuleset<TPiece> : DrawableRuleset where TPiece : Piece
+    public abstract partial class DrawableRuleset<TPiece> : DrawableRuleset where TPiece : Piece
     {
         public new Match<TPiece> Match { get; }
 

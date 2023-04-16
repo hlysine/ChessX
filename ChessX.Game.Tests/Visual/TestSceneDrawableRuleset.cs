@@ -11,7 +11,7 @@ using osu.Framework.Testing.Drawables.Steps;
 
 namespace ChessX.Game.Tests.Visual
 {
-    public class TestSceneDrawableRuleset : ChessXTestScene
+    public partial class TestSceneDrawableRuleset : ChessXTestScene
     {
         private readonly CancellationTokenSource cancellationTokenSource = new();
 

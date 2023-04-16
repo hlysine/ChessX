@@ -11,7 +11,7 @@ using osuTK;
 
 namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public class CompoundMoveButton<TMove> : MoveButton<TMove> where TMove : Move
+    public partial class CompoundMoveButton<TMove> : MoveButton<TMove> where TMove : Move
     {
         [Resolved]
         private IPopupContainer popupContainer { get; set; }

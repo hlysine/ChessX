@@ -8,7 +8,7 @@ using static ChessX.Game.Rulesets.Chess.UI.CheckerboardTile;
 
 namespace ChessX.Game.Rulesets.Chess.UI
 {
-    public class Checkerboard : CompositeDrawable
+    public partial class Checkerboard : CompositeDrawable
     {
         public int BoardWidth { get; private set; }
 

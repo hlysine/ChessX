@@ -9,7 +9,7 @@ using osuTK.Graphics;
 
 namespace ChessX.Game.Graphics
 {
-    public class Popup : VisibilityContainer
+    public partial class Popup : VisibilityContainer
     {
         [Resolved(canBeNull: true)]
         private IPopupContainer popupContainer { get; set; }

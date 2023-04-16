@@ -5,7 +5,7 @@ using osu.Framework.Testing;
 
 namespace ChessX.Game.Tests
 {
-    public class ChessXTestBrowser : ChessXGameBase
+    public partial class ChessXTestBrowser : ChessXGameBase
     {
         protected override void LoadComplete()
         {

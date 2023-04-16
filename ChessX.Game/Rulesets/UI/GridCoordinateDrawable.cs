@@ -11,7 +11,7 @@ namespace ChessX.Game.Rulesets.UI
     /// <summary>
     /// A drawable that uses grid coordinate positioning and counter-rotates according to parent.
     /// </summary>
-    public abstract class GridCoordinateDrawable : CompositeDrawable, IReceiveGridInput
+    public abstract partial class GridCoordinateDrawable : CompositeDrawable, IReceiveGridInput
     {
         [CanBeNull]
         [Resolved(canBeNull: true)]

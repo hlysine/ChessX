@@ -12,7 +12,7 @@ using osuTK;
 
 namespace ChessX.Game.Rulesets.UI.MoveSelection
 {
-    public abstract class MoveSelectionPopup<TMove> : Popup where TMove : Move
+    public abstract partial class MoveSelectionPopup<TMove> : Popup where TMove : Move
     {
         public Action<TMove> Action { get; set; }
 
@@ -40,7 +40,7 @@ namespace ChessX.Game.Rulesets.UI.MoveSelection
 
         protected abstract IEnumerable<Drawable> CreateButtons(IEnumerable<TMove> moves);
 
-        protected abstract class PieceButton : ClickableContainer
+        protected abstract partial class PieceButton : ClickableContainer
         {
             [CanBeNull]
             [Resolved(canBeNull: true)]

@@ -8,7 +8,7 @@ namespace ChessX.Game.Rulesets.UI
     /// <summary>
     /// A container that provides a grid coordinate system for children.
     /// </summary>
-    public class BoardScalingContainer : Container
+    public partial class BoardScalingContainer : Container
     {
         protected override Container<Drawable> Content => content;
         private readonly ScalingContainer content;

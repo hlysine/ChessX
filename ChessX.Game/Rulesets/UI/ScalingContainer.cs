@@ -6,7 +6,7 @@ namespace ChessX.Game.Rulesets.UI
     /// <summary>
     /// A <see cref="Container"/> which scales its content relative to a target width and height.
     /// </summary>
-    public class ScalingContainer : Container
+    public partial class ScalingContainer : Container
     {
         public int TargetWidth { get; set; }
 

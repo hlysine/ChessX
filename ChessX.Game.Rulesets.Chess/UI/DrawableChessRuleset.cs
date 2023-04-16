@@ -4,7 +4,7 @@ using ChessX.Game.Rulesets.UI;
 
 namespace ChessX.Game.Rulesets.Chess.UI
 {
-    public class DrawableChessRuleset : DrawableRuleset<ChessPiece>
+    public partial class DrawableChessRuleset : DrawableRuleset<ChessPiece>
     {
         public DrawableChessRuleset(ChessMatch match)
             : base(match)

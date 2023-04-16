@@ -4,7 +4,7 @@ using osu.Framework.Graphics;
 
 namespace ChessX.Game.Rulesets.Chess.UI
 {
-    public class DrawableChessMatch : DrawableMatch<ChessPiece>
+    public partial class DrawableChessMatch : DrawableMatch<ChessPiece>
     {
         public DrawableChessMatch(ChessMatch match)
             : base(match)

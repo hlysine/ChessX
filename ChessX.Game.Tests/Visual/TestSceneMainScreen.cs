@@ -4,7 +4,7 @@ using osu.Framework.Screens;
 
 namespace ChessX.Game.Tests.Visual
 {
-    public class TestSceneMainScreen : ChessXTestScene
+    public partial class TestSceneMainScreen : ChessXTestScene
     {
         public TestSceneMainScreen()
         {
